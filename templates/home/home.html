@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>imissreine.com</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <img src="{% static 'home/img/reineuuu.gif' %}" alt="Reine UUUU">
+        </div>
+      <h1 class="title has-text-centered">
+        <strong>I MISS REINE</strong>
+      </h1>
+      <p class="subtitle has-text-centered">
+        uuuuuuuuuuuu
+      </p>
+      <div class="card">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="{{ res.photo }}" alt="Reine Youtube image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">{{ res.name }}</p>
+            </div>
+          </div>
+      
+          <div class="content">
+            {{ res.description }}
+            <br>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+  </body>
+</html>
