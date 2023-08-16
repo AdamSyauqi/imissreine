@@ -13,7 +13,6 @@ def home(request):
     r = requests.get(url, headers=header)
     res = json.loads(r.text)
     desc = res['description']
-    print(desc)
     desc_split = desc.split("【")
 
     # # get reine videos
