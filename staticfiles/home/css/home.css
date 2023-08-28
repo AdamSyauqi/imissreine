@@ -19,3 +19,11 @@ html {
     text-align: center;
     text-decoration: none;
   }
+
+.youtube_link {
+  color: #000000;
+}
+
+.youtube_link:hover {
+  text-decoration: underline;
+}
