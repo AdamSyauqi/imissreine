@@ -17,7 +17,7 @@ def home(request):
 
     # # get reine videos
     url = "https://holodex.net/api/v2/channels/UChgTyjG-pdNvxxhdsXfHQ5Q/videos"
-    header = {'X-APIKEY': '10ed9af7-1787-40b2-865b-4766227522d1'}
+    header = {'X-APIKEY': os.environ['X-APIKEY']}
     r = requests.get(url, headers=header)
     videos_list = json.loads(r.text)
 
