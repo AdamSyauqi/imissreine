@@ -89,7 +89,7 @@
       {% if upcoming_counter > 0 %}
           <h1 class="title has-text-centered">Upcoming Livestreams</h1>
           <div style="width: 100%; margin: auto;">
-            {% for video in upcoming_videos %}
+            {% for video in upcoming_list %}
         <div class="box">
           <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
             <article class="media">
