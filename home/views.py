@@ -77,6 +77,4 @@ def home(request):
         'past_collabs_counter': past_collabs_counter
     }
 
-    print(past_collabs_videos)
-
     return render(request, 'home/home.html', context)
