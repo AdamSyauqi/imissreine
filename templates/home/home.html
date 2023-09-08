@@ -31,6 +31,8 @@
 <body>
   <section class="section">
     <div class="container">
+
+      <!-- If Reine is not Live -->
       {% if live_counter == 0 %}
       <div class="columns is-centered">
         <img src="{% static 'home/img/reineuuu.gif' %}" alt="Reine UUUU">
@@ -43,7 +45,8 @@
       </p>
 
       {% endif %}
-
+      
+      <!-- If Reine is Live -->
       {% if live_counter > 0 %}
       <div class="columns is-centered">
         <img src="{% static 'home/img/lfgreine.gif' %}" alt="Reine LFG">
@@ -57,6 +60,7 @@
 
       {% endif %}
 
+      <!-- If Reine is Collabing Live -->
       {% if live_collabs_counter > 0 %}
       <div class="columns is-centered">
         <img src="{% static 'home/img/smol_reine.gif' %}" alt="Reine Smol">
@@ -69,8 +73,9 @@
       </p>
 
       {% endif %}
-
       <br>
+
+      <!-- Reine's Live Video Link -->
       {% if live_counter > 0 %}
           <h1 class="title has-text-centered">Current Livestream</h1>
       <div style="width: 100%; margin: auto;">
@@ -98,6 +103,7 @@
         
       {% endif %}  
 
+      <!-- Reine's Upcoming Live Video Link -->
       {% if upcoming_counter > 0 %}
           <h1 class="title has-text-centered">Upcoming Livestreams</h1>
           <div style="width: 100%; margin: auto;">
@@ -122,11 +128,13 @@
         </div>
         {% endfor %}
           </div>
-        
       {% endif %}  
       <br>
+
+      <!-- 4 block Reine's Personal Information -->
       <div class="tile is-ancestor">
         <div class="tile is-4 is-vertical is-parent">
+          <!-- Youtube Info -->
           <div class="tile is-child box">
             <a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine">
               <div class="title">
@@ -144,6 +152,8 @@
               <p>{{ desc }}</p>
             </a>
           </div>
+
+          <!-- Donation Link -->
           <div class="tile is-child box">
             <p class="title">Support Reine!</p>
             <div class="level">
@@ -160,7 +170,10 @@
             </div>
           </div>
         </div>
+
         <div class="tile is-parent is-vertical">
+
+          <!-- Social Medias -->
           <div class="tile is-child box">
             <p class="title">Social Medias</p>
             <div class="level">
@@ -185,6 +198,8 @@
               </div>
             </div>
           </div>
+
+          <!-- Youtube Statistics -->
           <div class="tile is-child box">
             <div class="level">
               <div class="level-item has-text-centered">
@@ -216,6 +231,7 @@
         </div>
       </div>
       
+      <!-- Past Lives, Collabs, Songs Tabs -->
       <div class="tabs is-centered is-boxed is-large">
         <ul>
           <li class="tab is-active" onclick="openTab(event,'past_videos')"><a>Recent Livestreams</a></li>
@@ -225,6 +241,7 @@
         </ul>
       </div>
 
+      <!-- Recent Livestreams -->
       <div class="content-tab" id="past_videos">
         <div style="width: 100%; margin: auto;">
           {% for video in past_videos %}
@@ -250,6 +267,7 @@
         </div>
       </div>
 
+      <!-- Recent Collabs -->
       <div class="content-tab" style="display: none;" id="past_collabs_videos">
         <div style="width: 100%; margin: auto;">
           {% for video in past_collabs_videos %}
@@ -275,6 +293,7 @@
         </div>
       </div>
 
+      <!-- Original Songs -->
       <div class="content-tab" style="display: none;" id="ori_songs_list">
         <div style="width: 100%; margin: auto;">
           {% for video in ori_songs_list.items %}
@@ -300,6 +319,7 @@
         </div>
       </div>
 
+      <!-- Cover Songs -->
       <div class="content-tab" style="display: none;" id="cover_songs_list">
         <div style="width: 100%; margin: auto;">
           {% for video in cover_songs_list.items %}
@@ -324,11 +344,11 @@
         {% endfor %}
         </div>
       </div>
-        
       </div>
     </div>
   </section>
 </body>
+
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
