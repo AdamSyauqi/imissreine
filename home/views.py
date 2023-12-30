@@ -23,12 +23,12 @@ def home(request):
     X_APIKEY = os.environ['X-APIKEY']
 
     # Original Songs 25 Items
-    url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=25&playlistId={}&key={}".format(ori_songs, key)
+    url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId={}&key={}".format(ori_songs, key)
     r = requests.get(url)
     ori_songs_list = json.loads(r.text)
 
     # Cover Songs 50 Items
-    url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId={}&key={}".format(cover_songs, key)
+    url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId={}&key={}".format(cover_songs, key)
     r = requests.get(url)
     cover_songs_list = json.loads(r.text)
 
