@@ -2,6 +2,8 @@ from django.shortcuts import render
 import requests
 import json
 import os
+import time
+from datetime import datetime, timedelta
 
 # Create your views here.
 
@@ -24,33 +26,84 @@ def home(request):
 
     # Original Songs 25 Items
     url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId={}&key={}".format(ori_songs, key)
-    r = requests.get(url)
-    ori_songs_list = json.loads(r.text)
+    try:
+        r = requests.get(url, timeout=20)
+        ori_songs_list = json.loads(r.text)
+        save_info("ori_songs", ori_songs_list)
+    except requests.exceptions.Timeout:
+        ori_songs_list = get_saved_info("ori_songs")
+    except requests.exceptions.RequestException:
+        ori_songs_list = get_saved_info("ori_songs")
 
     # Cover Songs 50 Items
     url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId={}&key={}".format(cover_songs, key)
-    r = requests.get(url)
-    cover_songs_list = json.loads(r.text)
+    try:
+        r = requests.get(url, timeout=20)
+        cover_songs_list = json.loads(r.text)
+        save_info("cover_songs", cover_songs_list)
+    except requests.exceptions.Timeout:
+        cover_songs_list = get_saved_info("cover_songs")
+    except requests.exceptions.RequestException:
+        cover_songs_list = get_saved_info("cover_songs")
 
     # get reine channel info
+    start_time = time.time()
     url = "https://holodex.net/api/v2/channels/{}".format(channel)
     header = {'X-APIKEY': X_APIKEY}
-    r = requests.get(url, headers=header)
-    res = json.loads(r.text)
-    desc = res['description']
-    desc_split = desc.split("【")
+    try:
+        r = requests.get(url, headers=header, timeout=20)
+        res = json.loads(r.text)
+        save_info("channel", res) # saves data
+        desc = res['description']
+        desc_split = desc.split("【")
+        print("Holodex Reine Channel Info")
+    except requests.exceptions.Timeout:
+        # timeout
+        res = get_saved_info("channel")
+        desc = res['description']
+        desc_split = desc.split("【")
+        print("Holodex Reine Channel Info")
+    except requests.exceptions.RequestException:
+        # other requests
+        res = get_saved_info("channel")
+        desc = res['description']
+        desc_split = desc.split("【")
+        print("Holodex Reine Channel Info")
+    print("--- %s seconds ---" % (time.time() - start_time))
 
     # get reine videos
+    start_time = time.time()
     url = "https://holodex.net/api/v2/channels/{}/videos".format(channel)
     header = {'X-APIKEY': X_APIKEY}
-    r = requests.get(url, headers=header)
-    videos_list = json.loads(r.text)
+    try:
+        r = requests.get(url, headers=header, timeout=20)
+        videos_list = json.loads(r.text)
+        save_info("videos", videos_list) # saves data
+        print("Holodex Reine Channel Videos")
+    except requests.exceptions.Timeout:
+        videos_list = get_saved_info("videos")
+        print("Holodex Reine Channel Videos")
+    except requests.exceptions.RequestException:    
+        videos_list = get_saved_info("videos")
+        print("Holodex Reine Channel Videos")
+    print("--- %s seconds ---" % (time.time() - start_time))
 
+    start_time = time.time()
     # get reine collab videos
     url = "https://holodex.net/api/v2/channels/{}/collabs".format(channel)
     header = {'X-APIKEY': X_APIKEY}
-    r = requests.get(url, headers=header)
-    collabs_list = json.loads(r.text)
+    try:
+        r = requests.get(url, headers=header, timeout=20)
+        collabs_list = json.loads(r.text)
+        save_info("collabs", collabs_list) # saves data
+        print("Holodex Reine Channel Videos Collab")
+    except requests.exceptions.Timeout:
+        collabs_list = get_saved_info("collabs")
+        print("Holodex Reine Channel Videos Collab")
+    except requests.exceptions.RequestException:
+        collabs_list = get_saved_info("collabs")
+        print("Holodex Reine Channel Videos Collab")
+    print("--- %s seconds ---" % (time.time() - start_time))
 
     # filter upcoming and live
     upcoming_list = []
@@ -105,3 +158,34 @@ def home(request):
     }
 
     return render(request, 'home/home.html', context)
+
+def save_info(data_type, data):
+    text_file = str(data_type) + ".txt"
+    now = datetime.now() # check current time
+    try:
+        with open(text_file, "r") as f:
+            prev = f.readline()
+            prev = prev.strip()
+            prev_time = datetime.strptime(prev, "%Y-%m-%d %H:%M:%S.%f")
+            time_diff = now - prev_time
+            if time_diff > timedelta(minutes=10):
+                with open(text_file, "w") as f:
+                    print(f"saving {str(data_type)} data")
+                    f.write(str(now) + "\n")
+                    f.write(json.dumps(data))
+    except FileNotFoundError:
+        with open(text_file, "w") as f:
+            print(f"saving {str(data_type)} data")
+            f.write(str(now) + "\n")
+            f.write(json.dumps(data))
+    except Exception as e:
+        print(f"Failed to save information: {e}")
+    f.close()
+
+def get_saved_info(data_type):
+    text_file = str(data_type) + ".txt"
+    if os.path.exists(text_file):
+        with open(text_file, "r") as f:
+            f.readline()
+            data = f.read()
+            return json.loads(data)
