@@ -3,6 +3,7 @@
 {% load humanize %}
 {% load parse_iso %}
 {% load parse_iso_youtube %}
+{% csrf_token %}
 <html>
 
 <head>
@@ -23,9 +24,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="shortcut icon" href="{% static 'home/img/reineuuu.webp' %}" type="image/x-icon">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
   <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
-  <script src="{% static 'home/js/home.js' %}"></script>
+  <script src="{% static 'home/js/home.js' %}" defer></script>
   <script src="https://kit.fontawesome.com/18744820a2.js" crossorigin="anonymous"></script>
+  <script>
+    // Pass the URL to JavaScript
+    var incrementCounterUrl = "{% url 'home:increment_counter' %}";
+  </script>
+  <style>
+    @keyframes punch {
+        0% { transform: scale(1); z-index: 1; }
+        50% { transform: scale(7); z-index: 10; }
+        100% { transform: scale(1); z-index: 1; }
+    }
+    .punch-animation {
+        animation: punch 0.3s ease-in-out;
+        position: relative;
+    }
+  </style>
 </head>
 
 <body>
@@ -344,16 +361,30 @@
         {% endfor %}
         </div>
       </div>
-      </div>
+
+  <br>
     </div>
   </section>
-</body>
-
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      <strong>imissreine</strong> created by StrikeDX (Adam Syauqi). Past livestream and collab data provided by <a target="_blank" rel="noopener noreferrer" href="https://holodex.net/">Holodex</a>, Original and Cover Songs data provided by <a href="https://developers.google.com/youtube/v3">Youtube API</a>. Built with <a target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" href="https://www.djangoproject.com/">Django Framework</a>. <a target="_blank" rel="noopener noreferrer" href="https://github.com/AdamSyauqi/imissreine">Source Code</a>
-    </p>
+  
+  <div class="floating-container" id="tonjok-box">
+    <h3 class="title is-6">Global Tonjok Counter</h3>
+    <img src="{% static 'home/img/tonjok.webp' %}" alt="" id="punch-icon">
+    <button id="click-button" class="button is-danger">Tonjok!</button>
+    <div id="counter" class="title is-6">{{ click_counter }}</div>
   </div>
-</footer>
+
+  <!-- Add multiple audio elements -->
+  <audio id="punch-sound-1" src="{% static 'home/audio/MEP-SOUND-LOUD.mp3' %}" preload="auto"></audio>
+  <audio id="punch-sound-2" src="{% static 'home/audio/mep.mp3' %}" preload="auto"></audio>
+  <audio id="punch-sound-3" src="{% static 'home/audio/mep2.mp3' %}" preload="auto"></audio>
+  <audio id="punch-sound-4" src="{% static 'home/audio/MepMepMep.mp3' %}" preload="auto"></audio>
+
+  <footer class="footer" id="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>imissreine</strong> created by StrikeDX (Adam Syauqi). Past livestream and collab data provided by <a target="_blank" rel="noopener noreferrer" href="https://holodex.net/">Holodex</a>, Original and Cover Songs data provided by <a href="https://developers.google.com/youtube/v3">Youtube API</a>. Built with <a target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" href="https://www.djangoproject.com/">Django Framework</a>. Tonjok emote by <a target="_blank" rel="noopener noreferrer" href="https://x.com/Pistachii_art">PistachiiArt</a>. <a target="_blank" rel="noopener noreferrer" href="https://github.com/AdamSyauqi/imissreine">Source Code</a>
+      </p>
+    </div>
+  </footer>
+</body>
 </html>

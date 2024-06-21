@@ -4,7 +4,8 @@ import json
 import os
 import time
 from datetime import datetime, timedelta
-
+from django.http import JsonResponse
+from .models import ClickCounter
 # Create your views here.
 
 def home(request):
@@ -140,6 +141,13 @@ def home(request):
         elif video['status'] == 'past' and video['type'] == 'stream' and past_collabs_counter < 6:
             past_collabs_videos.append(video)
             past_collabs_counter += 1
+
+    try:
+        # Get the click counter value
+        counter, created = ClickCounter.objects.get_or_create(id=1)
+    except Exception as e:
+        print(f"Error retrieving or creating ClickCounter: {e}")
+        counter = None
        
     context = {
         'res': res,
@@ -154,10 +162,33 @@ def home(request):
         'past_collabs_videos': past_collabs_videos,
         'past_collabs_counter': past_collabs_counter,
         'ori_songs_list': ori_songs_list,
-        'cover_songs_list': cover_songs_list
+        'cover_songs_list': cover_songs_list,
+        'click_counter': counter.count
     }
 
     return render(request, 'home/home.html', context)
+
+def increment_counter(request):
+    try:
+        if request.method == "POST":
+            counter, created = ClickCounter.objects.get_or_create(id=1)
+            counter.count += 1
+
+            # Define the threshold for resetting the counter
+            reset_threshold = 2**31 - 1  # For IntegerField (maximum value)
+
+            # Check if the counter exceeds the threshold
+            if counter.count > reset_threshold:
+                counter.count = 0
+
+            counter.save()
+            return JsonResponse({'count': counter.count})
+        else:
+            counter = ClickCounter.objects.get_or_create(id=1)[0]
+            return JsonResponse({'count': counter.count})
+    except Exception as e:
+        print(f"Error in increment_counter view: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
 
 def save_info(data_type, data):
     text_file = str(data_type) + ".txt"
