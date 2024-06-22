@@ -38,6 +38,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.imissreine.com',
+    'https://imissreine.com',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
