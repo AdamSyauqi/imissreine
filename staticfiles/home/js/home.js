@@ -28,15 +28,6 @@ function openTab(evt, tabName) {
 }
 const csrftoken = getCookie('csrftoken');
 
-$.ajaxSetup({
-    beforeSend: function(xhr, settings) {
-        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-            // Only send the token to relative URLs i.e. locally.
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        }
-    }
-});
-
 $(document).ready(function() {
     $('#click-button').click(function() {
         // Select a random audio element
@@ -56,6 +47,7 @@ $(document).ready(function() {
         $.ajax({
             url: incrementCounterUrl,  // Use the global variable for the URL
             type: "POST",
+            headers: {'X-CSRFToken': csrftoken},
             data: {
                 csrfmiddlewaretoken: csrftoken,  // Explicitly add CSRF token to data
             },

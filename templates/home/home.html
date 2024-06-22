@@ -3,7 +3,6 @@
 {% load humanize %}
 {% load parse_iso %}
 {% load parse_iso_youtube %}
-{% csrf_token %}
 <html>
 
 <head>
@@ -369,6 +368,7 @@
   <div class="floating-container" id="tonjok-box">
     <h3 class="title is-6">Global Tonjok Counter</h3>
     <img src="{% static 'home/img/tonjok.webp' %}" alt="" id="punch-icon">
+    {% csrf_token %}
     <button id="click-button" class="button is-danger">Tonjok!</button>
     <div id="counter" class="title is-6">{{ click_counter }}</div>
   </div>
