@@ -25,7 +25,7 @@ def home(request):
     key = os.environ['key']
 
     # Holodex API Key
-    X_APIKEY = os.environ['X-APIKEY']
+    X_APIKEY = os.environ['X_APIKEY']
 
     # Original Songs 25 Items
     url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId={}&key={}".format(ori_songs, key)
