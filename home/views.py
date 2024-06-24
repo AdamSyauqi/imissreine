@@ -4,8 +4,10 @@ import json
 import os
 import time
 from datetime import datetime, timedelta
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import ClickCounter
+from PIL import Image, ImageDraw, ImageFont
+import io
 # Create your views here.
 
 def home(request):
@@ -220,3 +222,112 @@ def get_saved_info(data_type):
             f.readline()
             data = f.read()
             return json.loads(data)
+
+mon_dict = {
+    "January": "Chicken Porrdige", 
+    "February": "Beautiful Plate", 
+    "March": "Pandan Leaf", 
+    "April": "Palm Sugar", 
+    "May": "Kerupuk Putih", 
+    "June": "Coconut Rice Porridge", 
+    "July": "Dory Fish", 
+    "August": "Peanuts", 
+    "September": "Shredded Chicken", 
+    "October": "Sweet Potato Cookies", 
+    "November": "Salmon Fried Rice", 
+    "December": "Shrimp Paste Sambal"
+}
+
+day_dict = {
+    "Monday": "Swimming", 
+    "Tuesday": "Flying", 
+    "Wednesday": "Sommersaulting", 
+    "Thursday": "Pilates", 
+    "Friday": "Leaping", 
+    "Saturday": "Breakdancing", 
+    "Sunday": "Floating"
+}
+
+def wrap_text(text, font, max_width):
+    """
+    Wrap the text to fit within the specified width.
+    """
+    lines = []
+    words = text.split(' ')
+    current_line = ''
+    
+    for word in words:
+        if font.getsize(word)[0] > max_width:
+            if current_line:
+                lines.append(current_line)
+                current_line = ''
+            part = ''
+            for char in word:
+                test_part = part + char
+                if font.getsize(test_part)[0] > max_width:
+                    if part:
+                        lines.append(part + '-')
+                    part = char
+                else:
+                    part = test_part
+            current_line = part
+        else:
+            test_line = f"{current_line} {word}" if current_line else word
+            if font.getsize(test_line)[0] > max_width:
+                lines.append(current_line)
+                current_line = word
+            else:
+                current_line = test_line
+
+    if current_line:
+        lines.append(current_line)
+    return lines
+
+def generate_image(request):
+    # Get the month and day from the request
+    month = request.GET.get('month', '')
+    day = request.GET.get('day', '')
+    
+    # Load an image
+    base_dir = os.path.dirname(__file__)
+    staticfiles = os.path.join(base_dir, "../staticfiles/home")
+    img_path = os.path.join(staticfiles, "./img/reineboard.png")
+    img = Image.open(img_path)
+       
+    # Define the text and the font
+    month = mon_dict[month] # Already made dictionary
+    day = day_dict[day] # Already made dictionary
+    text = f"{month} {day}"
+    font_path = os.path.join(staticfiles, "./font/ShareTech-Regular.ttf")
+    font = ImageFont.truetype(font_path, 50)  # Adjust font size as needed
+    font_size = 50
+
+    start_x, start_y = 100, 300
+    end_x, end_y = 285, 450
+    max_width = end_x - start_x  # Calculate max width from given coordinates
+    wrapped_text = None
+
+    # Adjust font size until text fits within the vertical boundary
+    while True:
+        font = ImageFont.truetype(font_path, font_size)
+        wrapped_text = wrap_text(text, font, max_width)
+        total_height = sum(font.getsize(line)[1] for line in wrapped_text)
+        if start_y + total_height > end_y and font_size > 10:
+            font_size -= 1  # Decrease font size by 1
+        else:
+            break
+    
+    y = start_y
+    draw = ImageDraw.Draw(img)
+    for line in wrapped_text:
+        x = start_x  # Text starts at the horizontal position of 100
+        draw.text((x, y), line, font=font, fill=(26, 117, 255))
+        y += font.getsize(line)[1]  # Increment y for each new line using getsize()
+
+    # Save the image to a bytes buffer
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format='PNG')
+    img_byte_arr = img_byte_arr.getvalue()
+
+    # Return image as a HTTP response
+    return HttpResponse(img_byte_arr, content_type='image/png')

@@ -362,15 +362,80 @@
       </div>
 
   <br>
+  <div class="box">
+    <input type="hidden" id="image-url" value="{% url 'home:generate_image' %}">
+    <h1 class="title is-2 has-text-centered">Cek Your Khodam with Reine!</h1>
+    <div class="columns is-mobile is-multiline is-vcentered is-centered pl-6">
+        <!-- Dropdown for Month -->
+        <div class="column is-one-third">
+            <select id="month-select" class="select" onchange="checkSelection()">
+                <option value="">Select Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+                <!-- More months -->
+            </select>
+        </div>
+  
+        <!-- Dropdown for Day -->
+        <div class="column is-one-third">
+            <select id="day-select" class="select" onchange="checkSelection()">
+                <option value="">Select Day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+                <!-- More days -->
+            </select>
+        </div>
+  
+        <!-- Image Area -->
+        <div class="column is-one-third">
+            <figure>
+                <img id="reine-image" src="{% static 'home/img/reineboard.png' %}" alt="Pavolia Reine Holding a Whiteboard">
+            </figure>
+        </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-narrow">  <!-- is-narrow keeps the column width to the content (button) -->
+          <button class="button" onclick="updateResult()">Confirm Selection</button>
+      </div>
+  </div>
+  
+</div>
+
+  
+  </div>
+
+  
     </div>
   </section>
   
   <div class="floating-container" id="tonjok-box">
-    <h3 class="title is-6">Global Tonjok Counter</h3>
-    <img src="{% static 'home/img/tonjok.webp' %}" alt="" id="punch-icon">
-    {% csrf_token %}
-    <button id="click-button" class="button is-danger">Tonjok!</button>
-    <div id="counter" class="title is-6">{{ click_counter }}</div>
+    <div id="main-content">
+        <h3 class="title is-6">Global Tonjok Counter</h3>
+        <img src="{% static 'home/img/tonjok.webp' %}" alt="" id="punch-icon">
+        {% csrf_token %}
+        <button id="click-button" class="button is-danger">Tonjok!</button>
+        <div id="counter" class="title is-6">{{ click_counter }}</div>
+    </div>
+    <button id="toggle-button" class="button" style="position: absolute; bottom: 0; right: 0;">
+        <span id="eye-icon" class="icon">
+            <i class="fas fa-eye"></i> <!-- Default visible state -->
+        </span>
+    </button>
   </div>
 
   <!-- Add multiple audio elements -->
@@ -382,7 +447,7 @@
   <footer class="footer" id="footer">
     <div class="content has-text-centered">
       <p>
-        <strong>imissreine</strong> created by StrikeDX (Adam Syauqi). Past livestream and collab data provided by <a target="_blank" rel="noopener noreferrer" href="https://holodex.net/">Holodex</a>, Original and Cover Songs data provided by <a href="https://developers.google.com/youtube/v3">Youtube API</a>. Built with <a target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" href="https://www.djangoproject.com/">Django Framework</a>. Tonjok emote by <a target="_blank" rel="noopener noreferrer" href="https://x.com/Pistachii_art">PistachiiArt</a>. <a target="_blank" rel="noopener noreferrer" href="https://github.com/AdamSyauqi/imissreine">Source Code</a>
+        <strong>imissreine</strong> created by StrikeDX (Adam Syauqi). Past livestream and collab data provided by <a target="_blank" rel="noopener noreferrer" href="https://holodex.net/">Holodex</a>, Original and Cover Songs data provided by <a href="https://developers.google.com/youtube/v3">Youtube API</a>. Built with <a target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" href="https://www.djangoproject.com/">Django Framework</a>. Tonjok emote by <a target="_blank" rel="noopener noreferrer" href="https://x.com/Pistachii_art">PistachiiArt</a>. Reine Holding Board Art by <a target="_blank" rel="noopener noreferrer" href="https://x.com/Puunyannyan">Puunyan</a>. <a target="_blank" rel="noopener noreferrer" href="https://github.com/AdamSyauqi/imissreine">Source Code</a>
       </p>
     </div>
   </footer>

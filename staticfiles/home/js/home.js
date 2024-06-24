@@ -12,6 +12,9 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " is-active";
   }
 
+var mep_loud = document.getElementById("punch-sound-1");
+mep_loud.volume = 0.7;
+
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -84,4 +87,41 @@ $(document).ready(function() {
             });
         }
     });
+    $('#toggle-button').click(function() {
+        $('#main-content').toggle('fast', function() {
+            // Update the icon based on visibility
+            if ($('#main-content').is(':visible')) {
+                $('#eye-icon').html('<i class="fas fa-eye"></i>');
+                $('#toggle-tab').hide(); // Ensure the tab is completely hidden
+            } else {
+                $('#eye-icon').html('<i class="fas fa-eye-slash"></i>');
+                $('#toggle-tab').show();
+            }
+        });
+    });
 });
+
+function updateResult() {
+    const month = document.getElementById('month-select').value;
+    const day = document.getElementById('day-select').value;
+    if (month && day) {
+        const baseUrl = document.getElementById('image-url').value; // Get the URL from the hidden input
+        const imageUrl = `${baseUrl}?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}`;
+        document.getElementById('reine-image').src = imageUrl;
+    }
+}
+
+function checkSelection() {
+    const monthSelect = document.getElementById('month-select').value;
+    const daySelect = document.getElementById('day-select').value;
+    const button = document.querySelector('.button'); // Make sure this is specific enough or use an ID.
+
+    if (monthSelect && daySelect) {
+        button.disabled = false; // Enable the button if both selections are made
+    } else {
+        button.disabled = true; // Disable the button if selections are incomplete
+    }
+}
+
+// Call checkSelection on page load to set initial state
+document.addEventListener('DOMContentLoaded', checkSelection);
