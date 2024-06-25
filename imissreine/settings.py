@@ -93,8 +93,6 @@ WSGI_APPLICATION = 'imissreine.wsgi.application'
 
 # Detect the environment
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
-print(f"ENVIRONMENT: {ENVIRONMENT}")  # Debugging line
-print(f"DATABASE_URL: {os.getenv('DATABASE_URL')}")  # Debugging line
 
 # Database configuration
 if ENVIRONMENT == 'production':
