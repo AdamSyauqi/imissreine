@@ -363,7 +363,7 @@
 
   <br>
   <div class="box">
-    <input type="hidden" id="image-url" value="{% url 'home:generate_image' %}">
+    <input type="hidden" id="image-url" value="">
     <h1 class="title is-2 has-text-centered">Cek Your Khodam with Reine!</h1>
     <div class="columns is-mobile is-multiline is-vcentered is-centered pl-6">
         <!-- Dropdown for Month -->
@@ -411,15 +411,21 @@
     <div class="columns is-centered">
       <div class="column is-narrow">  <!-- is-narrow keeps the column width to the content (button) -->
           <button class="button" onclick="updateResult()">Confirm Selection</button>
+          <select id="language-select" class="select">
+            <option value="English">English</option>
+            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+          </select>
+          <button class="button" onclick="downloadImage()">
+            <span>Download Image</span>
+            <span class="icon">
+              <i class="fas fa-download"></i>
+            </span>
+          </button>
       </div>
   </div>
   
 </div>
-
-  
   </div>
-
-  
     </div>
   </section>
   

@@ -115,3 +115,8 @@ html {
   padding: 0.5em;
   margin-top: 0.5em;
 }
+
+#language-select {
+  padding: 0.5em;
+  height: 40px;
+}

@@ -238,6 +238,21 @@ mon_dict = {
     "December": "Shrimp Paste Sambal"
 }
 
+bulan_dict = {
+    "January": "Bubur Ayam", 
+    "February": "Piring Cantik", 
+    "March": "Daun Pandan", 
+    "April": "Gula Aren", 
+    "May": "Kerupuk Putih", 
+    "June": "Bubur Sumsum", 
+    "July": "Ikan Dori", 
+    "August": "Kacang Tanah", 
+    "September": "Ayam Suwir", 
+    "October": "Biskuit Ubi", 
+    "November": "Nasreng Salmon", 
+    "December": "Sambel Terasi"
+}
+
 day_dict = {
     "Monday": "Swimming", 
     "Tuesday": "Flying", 
@@ -246,6 +261,16 @@ day_dict = {
     "Friday": "Leaping", 
     "Saturday": "Breakdancing", 
     "Sunday": "Floating"
+}
+
+hari_dict = {
+    "Monday": "Berenang", 
+    "Tuesday": "Terbang", 
+    "Wednesday": "Salto", 
+    "Thursday": "Pilates", 
+    "Friday": "Loncat", 
+    "Saturday": "Breakdance", 
+    "Sunday": "Mengambang"
 }
 
 def wrap_text(text, font, max_width):
@@ -287,6 +312,7 @@ def generate_image(request):
     # Get the month and day from the request
     month = request.GET.get('month', '')
     day = request.GET.get('day', '')
+    language = request.GET.get('language', '')
     
     # Load an image
     base_dir = os.path.dirname(__file__)
@@ -295,8 +321,12 @@ def generate_image(request):
     img = Image.open(img_path)
        
     # Define the text and the font
-    month = mon_dict[month] # Already made dictionary
-    day = day_dict[day] # Already made dictionary
+    if language == "English":
+        month = mon_dict[month] # Already made dictionary
+        day = day_dict[day] # Already made dictionary
+    elif language == "Bahasa Indonesia":
+        month = bulan_dict[month]
+        day = hari_dict[day]
     text = f"{month} {day}"
     font_path = os.path.join(staticfiles, "./font/ShareTech-Regular.ttf")
     font = ImageFont.truetype(font_path, 50)  # Adjust font size as needed
@@ -330,4 +360,6 @@ def generate_image(request):
     img_byte_arr = img_byte_arr.getvalue()
 
     # Return image as a HTTP response
-    return HttpResponse(img_byte_arr, content_type='image/png')
+    res = HttpResponse(img_byte_arr, content_type='image/png')
+    res['Content-Disposition'] = 'attachment; filename="reine_khodam.png"'
+    return res

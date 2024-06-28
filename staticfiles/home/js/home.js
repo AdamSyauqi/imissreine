@@ -104,10 +104,13 @@ $(document).ready(function() {
 function updateResult() {
     const month = document.getElementById('month-select').value;
     const day = document.getElementById('day-select').value;
+    const language = document.getElementById('language-select').value;
     if (month && day) {
-        const baseUrl = document.getElementById('image-url').value; // Get the URL from the hidden input
-        const imageUrl = `${baseUrl}?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}`;
+        const imageUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}`;
         document.getElementById('reine-image').src = imageUrl;
+        document.getElementById('image-url').value = imageUrl; // Store the image URL
+    } else {
+        alert("Please select both month and day.");
     }
 }
 
@@ -125,3 +128,12 @@ function checkSelection() {
 
 // Call checkSelection on page load to set initial state
 document.addEventListener('DOMContentLoaded', checkSelection);
+
+function downloadImage() {
+    const imageUrl = document.getElementById('image-url').value;
+    if (imageUrl) {
+        window.location.href = imageUrl;
+    } else {
+        alert("Please confirm your selection first.");
+    }
+}
