@@ -110,8 +110,8 @@ function updateResult() {
         document.getElementById('reine-image').src = imageUrl;
         document.getElementById('image-url').value = imageUrl; // Store the image URL
 
-        document.getElementById('twitter-image').setAttribute("content", imageUrl);
-        document.getElementById('twitter-desc').setAttribute("content", "Check your Khodam with Reine!");
+        // document.getElementById('twitter-image').setAttribute("content", imageUrl);
+        // document.getElementById('twitter-desc').setAttribute("content", "Check your Khodam with Reine!");
     } else {
         alert("Please select both month and day.");
     }
@@ -145,13 +145,13 @@ function downloadImage() {
     }
 }
 
-function shareOnTwitter() {
-    const imageUrl = document.getElementById('image-url').value;
-    if (imageUrl) {
-        const text = encodeURIComponent("This is my Khodam with Reine! Check out yours too!");
-        const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.origin + imageUrl)}`;
-        window.open(url, '_blank');
-    } else {
-        alert("Please confirm your selection first.");
-    }
-}
+// function shareOnTwitter() {
+//     const imageUrl = document.getElementById('image-url').value;
+//     if (imageUrl) {
+//         const text = encodeURIComponent("This is my Khodam with Reine! Check out yours too!");
+//         const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.origin + imageUrl)}`;
+//         window.open(url, '_blank');
+//     } else {
+//         alert("Please confirm your selection first.");
+//     }
+// }
