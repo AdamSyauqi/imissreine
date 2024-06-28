@@ -8,6 +8,7 @@ from django.http import JsonResponse, HttpResponse
 from .models import ClickCounter
 from PIL import Image, ImageDraw, ImageFont
 import io
+from django.urls import reverse
 # Create your views here.
 
 def home(request):
@@ -150,7 +151,17 @@ def home(request):
     except Exception as e:
         print(f"Error retrieving or creating ClickCounter: {e}")
         counter = None
-       
+    
+    # Default values for month, day, and language
+    month = request.GET.get('month', 'January')
+    day = request.GET.get('day', 'Monday')
+    language = request.GET.get('language', 'English')
+
+    # Generate the Twitter image URL
+    twitter_image_url = request.build_absolute_uri(
+        reverse('home:generate_image') + f'?month={month}&day={day}&language={language}&disposition=inline'
+    )
+
     context = {
         'res': res,
         'desc': desc_split[0],
@@ -165,7 +176,8 @@ def home(request):
         'past_collabs_counter': past_collabs_counter,
         'ori_songs_list': ori_songs_list,
         'cover_songs_list': cover_songs_list,
-        'click_counter': counter.count
+        'click_counter': counter.count,
+        'twitter_image_url': twitter_image_url
     }
 
     return render(request, 'home/home.html', context)
@@ -313,6 +325,7 @@ def generate_image(request):
     month = request.GET.get('month', '')
     day = request.GET.get('day', '')
     language = request.GET.get('language', '')
+    disposition = request.GET.get('disposition', 'inline')  # Default to inline
     
     # Load an image
     base_dir = os.path.dirname(__file__)
@@ -361,5 +374,5 @@ def generate_image(request):
 
     # Return image as a HTTP response
     res = HttpResponse(img_byte_arr, content_type='image/png')
-    res['Content-Disposition'] = 'inline; filename="reine_khodam.png"'
+    res['Content-Disposition'] = f'{disposition}; filename="reine_khodam.png"'
     return res

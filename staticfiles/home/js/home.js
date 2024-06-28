@@ -106,9 +106,12 @@ function updateResult() {
     const day = document.getElementById('day-select').value;
     const language = document.getElementById('language-select').value;
     if (month && day) {
-        const imageUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}`;
+        const imageUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}&disposition=inline`;
         document.getElementById('reine-image').src = imageUrl;
         document.getElementById('image-url').value = imageUrl; // Store the image URL
+
+        document.getElementById('twitter-image').setAttribute("content", imageUrl);
+        document.getElementById('twitter-desc').setAttribute("content", "Check your Khodam with Reine!");
     } else {
         alert("Please select both month and day.");
     }
@@ -132,6 +135,7 @@ document.addEventListener('DOMContentLoaded', checkSelection);
 function downloadImage() {
     const imageUrl = document.getElementById('image-url').value;
     if (imageUrl) {
+        imageUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}&disposition=attachment`
         window.location.href = imageUrl;
     } else {
         alert("Please confirm your selection first.");
