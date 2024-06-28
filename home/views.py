@@ -361,5 +361,5 @@ def generate_image(request):
 
     # Return image as a HTTP response
     res = HttpResponse(img_byte_arr, content_type='image/png')
-    res['Content-Disposition'] = 'attachment; filename="reine_khodam.png"'
+    res['Content-Disposition'] = 'inline; filename="reine_khodam.png"'
     return res
