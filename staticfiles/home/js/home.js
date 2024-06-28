@@ -141,7 +141,7 @@ function downloadImage() {
 function shareOnTwitter() {
     const imageUrl = document.getElementById('image-url').value;
     if (imageUrl) {
-        const text = encodeURIComponent("This is my Khodam with Reine! Want to find out yours? Go to https://www.imissreine.com/");
+        const text = encodeURIComponent("This is my Khodam with Reine! Check out yours too!");
         const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.origin + imageUrl)}`;
         window.open(url, '_blank');
     } else {
