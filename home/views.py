@@ -31,7 +31,7 @@ def home(request):
     # Original Songs 25 Items
     url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId={}&key={}".format(ori_songs, key)
     try:
-        r = requests.get(url, timeout=20)
+        r = requests.get(url, timeout=10)
         ori_songs_list = json.loads(r.text)
         save_info("ori_songs", ori_songs_list)
     except requests.exceptions.Timeout:
@@ -42,7 +42,7 @@ def home(request):
     # Cover Songs 50 Items
     url = "https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId={}&key={}".format(cover_songs, key)
     try:
-        r = requests.get(url, timeout=20)
+        r = requests.get(url, timeout=10)
         cover_songs_list = json.loads(r.text)
         save_info("cover_songs", cover_songs_list)
     except requests.exceptions.Timeout:
@@ -55,7 +55,7 @@ def home(request):
     url = "https://holodex.net/api/v2/channels/{}".format(channel)
     header = {'X-APIKEY': X_APIKEY}
     try:
-        r = requests.get(url, headers=header, timeout=20)
+        r = requests.get(url, headers=header, timeout=10)
         res = json.loads(r.text)
         save_info("channel", res) # saves data
         desc = res['description']
@@ -80,7 +80,7 @@ def home(request):
     url = "https://holodex.net/api/v2/channels/{}/videos".format(channel)
     header = {'X-APIKEY': X_APIKEY}
     try:
-        r = requests.get(url, headers=header, timeout=20)
+        r = requests.get(url, headers=header, timeout=10)
         videos_list = json.loads(r.text)
         save_info("videos", videos_list) # saves data
         print("Holodex Reine Channel Videos")
@@ -97,7 +97,7 @@ def home(request):
     url = "https://holodex.net/api/v2/channels/{}/collabs".format(channel)
     header = {'X-APIKEY': X_APIKEY}
     try:
-        r = requests.get(url, headers=header, timeout=20)
+        r = requests.get(url, headers=header, timeout=10)
         collabs_list = json.loads(r.text)
         save_info("collabs", collabs_list) # saves data
         print("Holodex Reine Channel Videos Collab")
