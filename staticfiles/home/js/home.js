@@ -134,9 +134,12 @@ document.addEventListener('DOMContentLoaded', checkSelection);
 
 function downloadImage() {
     const imageUrl = document.getElementById('image-url').value;
+    const month = document.getElementById('month-select').value;
+    const day = document.getElementById('day-select').value;
+    const language = document.getElementById('language-select').value;
     if (imageUrl) {
-        imageUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}&disposition=attachment`
-        window.location.href = imageUrl;
+        downloadUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}&disposition=attachment`
+        window.location.href = downloadUrl;
     } else {
         alert("Please confirm your selection first.");
     }
