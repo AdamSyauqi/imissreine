@@ -105,8 +105,8 @@ function updateResult() {
     const month = document.getElementById('month-select').value;
     const day = document.getElementById('day-select').value;
     const language = document.getElementById('language-select').value;
-    if (month && day) {
-        const imageUrl = `/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}&disposition=inline`;
+    if (month && day && language) {
+        const imageUrl = `${window.location.origin}/generate-image/?month=${encodeURIComponent(month)}&day=${encodeURIComponent(day)}&language=${encodeURIComponent(language)}&disposition=inline`;
         document.getElementById('reine-image').src = imageUrl;
         document.getElementById('image-url').value = imageUrl; // Store the image URL
 
