@@ -120,7 +120,7 @@ function updateResult() {
 function checkSelection() {
     const monthSelect = document.getElementById('month-select').value;
     const daySelect = document.getElementById('day-select').value;
-    const button = document.querySelector('.button'); // Make sure this is specific enough or use an ID.
+    const button = document.getElementById('confirm-selection'); // Make sure this is specific enough or use an ID.
 
     if (monthSelect && daySelect) {
         button.disabled = false; // Enable the button if both selections are made
@@ -144,6 +144,10 @@ function downloadImage() {
         alert("Please confirm your selection first.");
     }
 }
+
+document.getElementById('scrollToKhodamButton').addEventListener('click', function() {
+    document.getElementById('khodam').scrollIntoView({ behavior: 'smooth' });
+});
 
 // function shareOnTwitter() {
 //     const imageUrl = document.getElementById('image-url').value;

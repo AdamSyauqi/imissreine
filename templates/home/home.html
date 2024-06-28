@@ -145,6 +145,11 @@
         {% endfor %}
           </div>
       {% endif %}  
+
+      <br>
+      <div class="columns is-centered">
+        <button id="scrollToKhodamButton" class="button is-info">Check your Khodam Below!</button>
+      </div>
       <br>
 
       <!-- 4 block Reine's Personal Information -->
@@ -362,7 +367,7 @@
       </div>
 
   <br>
-  <div class="box"> <!-- Cek Khodam -->
+  <div class="box" id="khodam"> <!-- Cek Khodam -->
     <input type="hidden" id="image-url" value="">
     <h1 class="title is-2 has-text-centered">Cek Your Khodam with Reine!</h1>
     <h1 class="subtitle is-4 has-text-centered">Enter the month of your birth and what day of the week it is to check your Khodam!</h1>
@@ -411,7 +416,7 @@
     </div>
     <div class="columns is-centered">
       <div class="column is-narrow">  <!-- is-narrow keeps the column width to the content (button) -->
-          <button class="button" onclick="updateResult()">Confirm Selection</button>
+          <button class="button" id="confirm-selection" onclick="updateResult()">Confirm Selection</button>
           <select id="language-select" class="select">
             <option value="English">English</option>
             <option value="Bahasa Indonesia">Bahasa Indonesia</option>
