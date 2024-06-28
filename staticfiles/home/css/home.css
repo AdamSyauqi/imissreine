@@ -120,3 +120,7 @@ html {
   padding: 0.5em;
   height: 40px;
 }
+
+#tweet-share {
+  padding-left: 45px;
+}
