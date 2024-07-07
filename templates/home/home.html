@@ -48,36 +48,22 @@
   <section class="section">
     <div class="container">
 
+      <input type="hidden" id="youtube-api-key" value="{{ youtube_api_key }}">
+      <input type="hidden" id="holodex-api-key" value="{{ holodex_api_key }}">
+      <input type="hidden" id="reineuuu" value="{% static 'home/img/reineuuu.gif' %}">
+      <input type="hidden" id="lfgreine" value="{% static 'home/img/lfgreine.gif' %}">
+
       <!-- If Reine is not Live -->
-      {% if live_counter == 0 %}
-      <div class="columns is-centered">
-        <img src="{% static 'home/img/reineuuu.gif' %}" alt="Reine UUUU">
+      <div class="check-live">
+        <span>Checking if she's live right now ...</span>
+        <span class="loader"></span>
       </div>
-      <h1 class="title has-text-centered">
-        <strong>I MISS REINE</strong>
-      </h1>
-      <p class="subtitle has-text-centered">
-        uuuuuuuuuuuu
-      </p>
 
-      {% endif %}
-      
-      <!-- If Reine is Live -->
-      {% if live_counter > 0 %}
-      <div class="columns is-centered">
-        <img src="{% static 'home/img/lfgreine.gif' %}" alt="Reine LFG">
-      </div>
-      <h1 class="title has-text-centered">
-        <strong>SHE'S HERE!!!</strong>
-      </h1>
-      <p class="subtitle has-text-centered">
-        LET'S GOOOOO <br> NOW WATCH HER
-      </p>
-
-      {% endif %}
+      <div class="live-info"></div>
+    
 
       <!-- If Reine is Collabing Live -->
-      {% if live_collabs_counter > 0 %}
+      <!-- {% if live_collabs_counter > 0 %}
       <div class="columns is-centered">
         <img src="{% static 'home/img/smol_reine.gif' %}" alt="Reine Smol">
       </div>
@@ -88,14 +74,17 @@
         LET'S GOOOOO <br> NOW WATCH HER
       </p>
 
-      {% endif %}
-      <br>
-
+      {% endif %} -->
+      <div class="livestream">
+        <span>Loading livestream info ...</span>
+        <span class="loader"></span>
+      </div>
+      
       <!-- Reine's Live Video Link -->
-      {% if live_counter > 0 %}
-          <h1 class="title has-text-centered">Current Livestream</h1>
-      <div style="width: 100%; margin: auto;">
-        {% for video in live_videos %}
+      <!-- {% if live_counter > 0 %} -->
+      <!-- <h1 class="title has-text-centered">Current Livestream</h1>
+      <div style="width: 100%; margin: auto;"> -->
+        <!-- {% for video in live_videos %}
         <div class="box">
           <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
             <article class="media">
@@ -115,12 +104,17 @@
           </a>
         </div>
         {% endfor %}
-      </div>
+      </div> -->
         
-      {% endif %}  
+      <!-- {% endif %}   -->
 
       <!-- Reine's Upcoming Live Video Link -->
-      {% if upcoming_counter > 0 %}
+      <div class="upcoming">
+        <span>Loading upcoming livestreams info ...</span>
+        <span class="loader"></span>
+      </div>
+      
+      <!-- {% if upcoming_counter > 0 %}
           <h1 class="title has-text-centered">Upcoming Livestreams</h1>
           <div style="width: 100%; margin: auto;">
             {% for video in upcoming_list %}
@@ -144,7 +138,7 @@
         </div>
         {% endfor %}
           </div>
-      {% endif %}  
+      {% endif %}   -->
 
       <br>
       <div class="columns is-centered">
@@ -156,8 +150,12 @@
       <div class="tile is-ancestor">
         <div class="tile is-4 is-vertical is-parent">
           <!-- Youtube Info -->
-          <div class="tile is-child box">
-            <a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine">
+          <div class="tile is-child box" id="channel-info">
+            <div>
+              <span>Loading channel info ...</span>
+              <span class="loader"></span>
+            </div>
+            <!-- <a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine">
               <div class="title">
                 <div class="media">
                   <div class="media-left">
@@ -171,7 +169,7 @@
                 </div>
               </div>
               <p>{{ desc }}</p>
-            </a>
+            </a> -->
           </div>
 
           <!-- Donation Link -->
@@ -221,8 +219,13 @@
           </div>
 
           <!-- Youtube Statistics -->
-          <div class="tile is-child box">
-            <div class="level">
+          <div class="tile is-child box" id="statistics">
+            <div>
+              <span>Loading statistics info ...</span>
+              <span class="loader"></span>
+            </div>
+            
+            <!-- <div class="level">
               <div class="level-item has-text-centered">
                 <div>
                   <p class="heading">View Count</p>
@@ -247,7 +250,7 @@
                   <p class="title">{{ res.clip_count }}</p>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -265,7 +268,9 @@
       <!-- Recent Livestreams -->
       <div class="content-tab" id="past_videos">
         <div style="width: 100%; margin: auto;">
-          {% for video in past_videos %}
+          <span>Loading past videos ...</span>
+          <span class="loader"></span>
+          <!-- {% for video in past_videos %}
           <div class="box">
             <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
               <article class="media">
@@ -284,14 +289,16 @@
               </article>
             </a>
           </div>
-        {% endfor %}
+        {% endfor %} -->
         </div>
       </div>
 
       <!-- Recent Collabs -->
       <div class="content-tab" style="display: none;" id="past_collabs_videos">
         <div style="width: 100%; margin: auto;">
-          {% for video in past_collabs_videos %}
+          <span>Loading collab videos ...</span>
+          <span class="loader"></span>
+          <!-- {% for video in past_collabs_videos %}
           <div class="box">
             <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
               <article class="media">
@@ -310,14 +317,16 @@
               </article>
             </a>
           </div>
-        {% endfor %}
+        {% endfor %} -->
         </div>
       </div>
 
       <!-- Original Songs -->
       <div class="content-tab" style="display: none;" id="ori_songs_list">
         <div style="width: 100%; margin: auto;">
-          {% for video in ori_songs_list.items %}
+          <span>Loading original songs ...</span>
+          <span class="loader"></span>
+          <!-- {% for video in ori_songs_list.items %}
           <div class="box">
             <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.contentDetails.videoId }}" target="_blank" rel="noopener noreferrer">
               <article class="media">
@@ -336,14 +345,16 @@
               </article>
             </a>
           </div>
-        {% endfor %}
+        {% endfor %} -->
         </div>
       </div>
 
       <!-- Cover Songs -->
       <div class="content-tab" style="display: none;" id="cover_songs_list">
         <div style="width: 100%; margin: auto;">
-          {% for video in cover_songs_list.items %}
+          <span>Loading cover songs ...</span>
+          <span class="loader"></span>
+          <!-- {% for video in cover_songs_list.items %}
           <div class="box">
             <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.contentDetails.videoId }}" target="_blank" rel="noopener noreferrer">
               <article class="media">
@@ -362,7 +373,7 @@
               </article>
             </a>
           </div>
-        {% endfor %}
+        {% endfor %} -->
         </div>
       </div>
 

@@ -99,6 +99,210 @@ $(document).ready(function() {
             }
         });
     });
+
+    const apiKey = document.getElementById('youtube-api-key').value;
+    const holodexApiKey = document.getElementById('holodex-api-key').value;
+    const channel = 'UChgTyjG-pdNvxxhdsXfHQ5Q';
+    const oriSongs = 'PLrALGrrF-6IWBHB3pdou530lFKrSsCtD4';
+    const coverSongs = 'PLrALGrrF-6IVnnurSv7Nxdxpo5zJmmjnC';
+
+    // channel info
+    $.ajax({
+        url: `https://holodex.net/api/v2/channels/${channel}`,
+        headers: { 'X-APIKEY': holodexApiKey },
+        timeout: 5000,
+        success: function(res) {
+            console.log(res)
+            $(`#channel-info`).html(`<a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine"> <div class="title"> <div class="media"> <div class="media-left"> <figure class="image is-48x48"> <img src="${res.photo}" alt="Reine Youtube image"> </figure> </div> <div class="media-content"> <p class="title is-4"> ${res.name}</p> </div> </div> </div> <p>${res.description.split(`【`)[0]}</p> </a>`)
+            $(`#statistics`).html(`<div class="level">
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">View Count</p>
+                  <p class="title">${res.view_count.toLocaleString()}</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Video Count</p>
+                  <p class="title">${res.video_count}</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Subscribers</p>
+                  <p class="title">${res.subscriber_count.toLocaleString()}</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Clips Count</p>
+                  <p class="title">${res.clip_count}</p>
+                </div>
+              </div>
+            </div>`)
+        },
+        error: function() {
+            console.log("Error Loading")
+        }
+    })
+
+    // collabs
+    $.ajax({
+        url: `https://holodex.net/api/v2/channels/${channel}/collabs`,
+        headers: { 'X-APIKEY': holodexApiKey },
+        timeout: 5000,
+        success: function(res) {
+            console.log(res)
+            let live_collab_videos = []
+            let live_collab_counter = 0
+            let past_collab_videos = []
+            let past_collab_counter = 0
+
+            for (let video in res) {
+                if (video.status == 'live' && video.type == 'stream') {
+                    live_collab_videos.push(video)
+                    live_collab_counter += 1
+                }
+                else if (video.status == 'past' && video.type == 'stream' && past_collab_counter < 6) {
+                    past_collab_videos.push(video)
+                    past_collab_counter += 1
+                }
+            }
+        },
+        error: function() {
+            console.log("Error Loading")
+        }
+    })
+
+    // livestreams and videos
+    $.ajax({
+        url: `https://holodex.net/api/v2/channels/${channel}/videos`,
+        headers: { 'X-APIKEY': holodexApiKey },
+        timeout: 5000,
+        success: function(res) {
+            console.log(res)
+            let live_videos = []
+            let live_counter = 0
+            let upcoming_videos = []
+            let upcoming_counter = 0
+
+            let past_videos = []
+            let past_counter = 0
+
+            var lfgreine = document.getElementById('lfgreine').value;
+            var reineuuu = document.getElementById('reineuuu').value;
+
+            for (let video in res) {
+                if (video.status == 'upcoming') {
+                    upcoming_videos.push(video)
+                    upcoming_counter += 1
+                }
+                else if (video.status == 'live') {
+                    live_videos.push(video)
+                    live_counter += 1
+                }
+            }
+
+            live_counter += 1
+            live_videos.push(res[3])
+
+            for (let video in res) {
+                if (past_counter == 5) {
+                    break
+                }
+                if (video.status == 'past' && video.type == 'stream') {
+                    past_videos.push(video)
+                    past_counter += 1
+                }
+            }
+
+            console.log(live_counter)
+
+            console.log(past_videos)
+
+            if (live_counter > 0) {
+                console.log("live")
+                $(`.check-live`).html(`
+                    <div class="columns is-centered">
+                        <img src="${lfgreine}" alt="Reine LFG">
+                    </div>
+                    <h1 class="title has-text-centered">
+                        <strong>SHE'S HERE!!!</strong>
+                    </h1>
+                    <p class="subtitle has-text-centered">
+                        LET'S GOOOOO <br> NOW WATCH HER
+                    </p>`
+                )
+                $(`.livestream`).html(`
+                    <h1 class="title has-text-centered">
+                        Current Livestream
+                    </h1>
+                    <div style="width: 100%; margin: auto;">
+                    {% for video in live_videos %}
+        <div class="box">
+          <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
+            <article class="media">
+              <div class="media-left">
+                <figure class="image">
+                  <img src="https://img.youtube.com/vi/{{ video.id }}/default.jpg" width="480" height="360" alt="Thumbnail Image">
+                </figure>
+              </div>
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong>{{ video.title }}</strong> <br> <small>{{ video.published_at|parse_iso|date:'d/m/Y' }}</small>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </a>
+        </div>
+        {% endfor %}`
+                )
+            }
+            else if (live_counter == 0) {
+                console.log("not live")
+                $(`.check-live`).html(`
+                    <div class="columns is-centered">
+                        <img src="${reineuuu}" alt="Reine UUUU">
+                    </div>
+                    <h1 class="title has-text-centered">
+                        <strong>I MISS REINE</strong>
+                    </h1>
+                    <p class="subtitle has-text-centered">
+                        uuuuuuuuuuuu
+                    </p>`
+                )
+            }
+        },
+        error: function() {
+            console.log("Error Loading")
+        }
+    })
+
+    // Fetch original songs
+    $.ajax({
+        url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId=${oriSongs}&key=${apiKey}`,
+        timeout: 5000,
+        success: function(res) {
+            console.log(res)
+        },
+        error: function() {
+            console.log("Error Loading")
+        }
+    });
+
+    // Fetch original songs
+    $.ajax({
+        url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId=${coverSongs}&key=${apiKey}`,
+        timeout: 5000,
+        success: function(res) {
+            console.log(res)
+        },
+        error: function() {
+            console.log("Error Loading")
+        }
+    });
 });
 
 function updateResult() {
