@@ -364,7 +364,6 @@ $(document).ready(function() {
                 $(`.upcoming`).html(``)
             }
 
-            console.log(past_counter)
             if (past_counter > 0) {
                 let past_content = `
                 <div style="width: 100%; margin: auto;">`;
