@@ -52,93 +52,31 @@
       <input type="hidden" id="holodex-api-key" value="{{ holodex_api_key }}">
       <input type="hidden" id="reineuuu" value="{% static 'home/img/reineuuu.gif' %}">
       <input type="hidden" id="lfgreine" value="{% static 'home/img/lfgreine.gif' %}">
+      <input type="hidden" id="smol_reine" value="{% static 'home/img/smol_reine.gif' %}">
 
       <!-- If Reine is not Live -->
       <div class="check-live">
         <span>Checking if she's live right now ...</span>
         <span class="loader"></span>
-      </div>
+      </div>    
 
-      <div class="live-info"></div>
-    
-
-      <!-- If Reine is Collabing Live -->
-      <!-- {% if live_collabs_counter > 0 %}
-      <div class="columns is-centered">
-        <img src="{% static 'home/img/smol_reine.gif' %}" alt="Reine Smol">
-      </div>
-      <h1 class="title has-text-centered">
-        <strong>SHE'S IN <a href="https://www.youtube.com/channel/{{ live_collabs_videos.0.channel.id }}" target="_blank" rel="noopener noreferrer">{{ live_collabs_videos.0.channel.name }}</a>'s CHANNEL</strong>
-      </h1>
-      <p class="subtitle has-text-centered">
-        LET'S GOOOOO <br> NOW WATCH HER
-      </p>
-
-      {% endif %} -->
+      <!-- Reine's Live Video Link -->
       <div class="livestream">
         <span>Loading livestream info ...</span>
         <span class="loader"></span>
       </div>
-      
-      <!-- Reine's Live Video Link -->
-      <!-- {% if live_counter > 0 %} -->
-      <!-- <h1 class="title has-text-centered">Current Livestream</h1>
-      <div style="width: 100%; margin: auto;"> -->
-        <!-- {% for video in live_videos %}
-        <div class="box">
-          <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
-            <article class="media">
-              <div class="media-left">
-                <figure class="image">
-                  <img src="https://img.youtube.com/vi/{{ video.id }}/default.jpg" width="480" height="360" alt="Thumbnail Image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>{{ video.title }}</strong> <br> <small>{{ video.published_at|parse_iso|date:'d/m/Y' }}</small>
-                  </p>
-                </div>
-              </div>
-            </article>
-          </a>
-        </div>
-        {% endfor %}
-      </div> -->
-        
-      <!-- {% endif %}   -->
 
       <!-- Reine's Upcoming Live Video Link -->
       <div class="upcoming">
         <span>Loading upcoming livestreams info ...</span>
         <span class="loader"></span>
       </div>
-      
-      <!-- {% if upcoming_counter > 0 %}
-          <h1 class="title has-text-centered">Upcoming Livestreams</h1>
-          <div style="width: 100%; margin: auto;">
-            {% for video in upcoming_list %}
-        <div class="box">
-          <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
-            <article class="media">
-              <div class="media-left">
-                <figure class="image">
-                  <img src="https://img.youtube.com/vi/{{ video.id }}/default.jpg" width="480" height="360" alt="Thumbnail Image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>{{ video.title }}</strong> <br> <small>{{ video.published_at|parse_iso|date:'d/m/Y' }}</small>
-                  </p>
-                </div>
-              </div>
-            </article>
-          </a>
-        </div>
-        {% endfor %}
-          </div>
-      {% endif %}   -->
+
+      <!-- Reine's Collab Live Video Link -->
+      <div class="live_collabs">
+        <span>Loading collab livestreams info ...</span>
+        <span class="loader"></span>
+      </div>
 
       <br>
       <div class="columns is-centered">
@@ -155,21 +93,6 @@
               <span>Loading channel info ...</span>
               <span class="loader"></span>
             </div>
-            <!-- <a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine">
-              <div class="title">
-                <div class="media">
-                  <div class="media-left">
-                    <figure class="image is-48x48">
-                      <img src="{{ res.photo }}" alt="Reine Youtube image">
-                    </figure>
-                  </div>
-                  <div class="media-content">
-                    <p class="title is-4">{{ res.name }}</p>
-                  </div>
-                </div>
-              </div>
-              <p>{{ desc }}</p>
-            </a> -->
           </div>
 
           <!-- Donation Link -->
@@ -224,33 +147,6 @@
               <span>Loading statistics info ...</span>
               <span class="loader"></span>
             </div>
-            
-            <!-- <div class="level">
-              <div class="level-item has-text-centered">
-                <div>
-                  <p class="heading">View Count</p>
-                  <p class="title">{{ res.view_count|intcomma }}</p>
-                </div>
-              </div>
-              <div class="level-item has-text-centered">
-                <div>
-                  <p class="heading">Video Count</p>
-                  <p class="title">{{ res.video_count }}</p>
-                </div>
-              </div>
-              <div class="level-item has-text-centered">
-                <div>
-                  <p class="heading">Subscribers</p>
-                  <p class="title">{{ res.subscriber_count|intcomma }}</p>
-                </div>
-              </div>
-              <div class="level-item has-text-centered">
-                <div>
-                  <p class="heading">Clips Count</p>
-                  <p class="title">{{ res.clip_count }}</p>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -270,26 +166,6 @@
         <div style="width: 100%; margin: auto;">
           <span>Loading past videos ...</span>
           <span class="loader"></span>
-          <!-- {% for video in past_videos %}
-          <div class="box">
-            <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
-              <article class="media">
-                <div class="media-left">
-                  <figure class="image">
-                    <img src="https://img.youtube.com/vi/{{ video.id }}/default.jpg" width="480" height="360" alt="Thumbnail Image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <strong>{{ video.title }}</strong> <br> <small>{{ video.published_at|parse_iso|date:'d/m/Y' }}</small>
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-        {% endfor %} -->
         </div>
       </div>
 
@@ -298,26 +174,6 @@
         <div style="width: 100%; margin: auto;">
           <span>Loading collab videos ...</span>
           <span class="loader"></span>
-          <!-- {% for video in past_collabs_videos %}
-          <div class="box">
-            <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
-              <article class="media">
-                <div class="media-left">
-                  <figure class="image">
-                    <img src="https://img.youtube.com/vi/{{ video.id }}/default.jpg" width="480" height="360" alt="Thumbnail Image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <strong>{{ video.title }}</strong> <br> <small>{{ video.published_at|parse_iso|date:'d/m/Y' }}</small>
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-        {% endfor %} -->
         </div>
       </div>
 
@@ -326,26 +182,6 @@
         <div style="width: 100%; margin: auto;">
           <span>Loading original songs ...</span>
           <span class="loader"></span>
-          <!-- {% for video in ori_songs_list.items %}
-          <div class="box">
-            <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.contentDetails.videoId }}" target="_blank" rel="noopener noreferrer">
-              <article class="media">
-                <div class="media-left">
-                  <figure class="image">
-                    <img src="{{ video.snippet.thumbnails.default.url }}" width="480" height="360" alt="Thumbnail Image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <strong>{{ video.snippet.title }}</strong> <br> <small>{{ video.snippet.publishedAt|parse_iso_youtube|date:'d/m/Y' }}</small>
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-        {% endfor %} -->
         </div>
       </div>
 
@@ -354,26 +190,6 @@
         <div style="width: 100%; margin: auto;">
           <span>Loading cover songs ...</span>
           <span class="loader"></span>
-          <!-- {% for video in cover_songs_list.items %}
-          <div class="box">
-            <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.contentDetails.videoId }}" target="_blank" rel="noopener noreferrer">
-              <article class="media">
-                <div class="media-left">
-                  <figure class="image">
-                    <img src="{{ video.snippet.thumbnails.default.url }}" width="480" height="360" alt="Thumbnail Image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <div class="content">
-                    <p>
-                      <strong>{{ video.snippet.title }}</strong> <br> <small>{{ video.snippet.publishedAt|parse_iso_youtube|date:'d/m/Y' }}</small>
-                    </p>
-                  </div>
-                </div>
-              </article>
-            </a>
-          </div>
-        {% endfor %} -->
         </div>
       </div>
 

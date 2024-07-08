@@ -101,10 +101,21 @@ $(document).ready(function() {
     });
 
     const apiKey = document.getElementById('youtube-api-key').value;
+    document.getElementById('youtube-api-key').outerHTML = "";
     const holodexApiKey = document.getElementById('holodex-api-key').value;
+    document.getElementById('holodex-api-key').outerHTML = "";
+
     const channel = 'UChgTyjG-pdNvxxhdsXfHQ5Q';
     const oriSongs = 'PLrALGrrF-6IWBHB3pdou530lFKrSsCtD4';
     const coverSongs = 'PLrALGrrF-6IVnnurSv7Nxdxpo5zJmmjnC';
+
+    function parseISODate(dateString) {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // Months are zero-based
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
 
     // channel info
     $.ajax({
@@ -112,7 +123,6 @@ $(document).ready(function() {
         headers: { 'X-APIKEY': holodexApiKey },
         timeout: 5000,
         success: function(res) {
-            console.log(res)
             $(`#channel-info`).html(`<a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine"> <div class="title"> <div class="media"> <div class="media-left"> <figure class="image is-48x48"> <img src="${res.photo}" alt="Reine Youtube image"> </figure> </div> <div class="media-content"> <p class="title is-4"> ${res.name}</p> </div> </div> </div> <p>${res.description.split(`【`)[0]}</p> </a>`)
             $(`#statistics`).html(`<div class="level">
               <div class="level-item has-text-centered">
@@ -142,7 +152,8 @@ $(document).ready(function() {
             </div>`)
         },
         error: function() {
-            console.log("Error Loading")
+            $(`#channel-info`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
+            $(`#statistics`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
         }
     })
 
@@ -152,35 +163,82 @@ $(document).ready(function() {
         headers: { 'X-APIKEY': holodexApiKey },
         timeout: 5000,
         success: function(res) {
-            console.log(res)
             let live_collab_videos = []
             let live_collab_counter = 0
             let past_collab_videos = []
             let past_collab_counter = 0
 
-            for (let video in res) {
+            var smol_reine = document.getElementById('smol_reine').value;
+
+            res.forEach(video => {
                 if (video.status == 'live' && video.type == 'stream') {
                     live_collab_videos.push(video)
                     live_collab_counter += 1
                 }
-                else if (video.status == 'past' && video.type == 'stream' && past_collab_counter < 6) {
+                else if (video.status == 'past' && video.type == 'stream' && past_collab_counter < 5) {
                     past_collab_videos.push(video)
                     past_collab_counter += 1
                 }
+            })
+
+            if (live_collab_counter > 0) {
+                $(`.live_collabs`).html(`
+                    <br>
+                    <div class="columns is-centered">
+                        <img src="${smol_reine}" alt="Reine Smol">
+                    </div>
+                    <h1 class="title has-text-centered">
+                        <strong>SHE'S IN <a href="https://www.youtube.com/channel/${live_collab_videos[0].channel.id}" target="_blank" rel="noopener noreferrer">${live_collab_videos[0].channel.name}</a>'s CHANNEL</strong>
+                    </h1>
+                    <p class="subtitle has-text-centered">
+                        LET'S GOOOOO <br> NOW WATCH HER</p>
+                `)
             }
+            else {
+                $(`.live_collabs`).html(``)
+            }
+            
+            if (past_collab_counter > 0) {
+                let past_collab_content = `<div style="width: 100%; margin: auto;">`;
+
+                past_collab_videos.forEach(video => {
+                    past_collab_content += `
+                    <div class="box">
+                    <a class="youtube_link" href="https://www.youtube.com/watch?v=${video.id}" target="_blank" rel="noopener noreferrer">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image">
+                                    <img src="https://img.youtube.com/vi/${video.id}/default.jpg" width="480" height="360" alt="Thumbnail Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                    <strong>${video.title}</strong> <br> <small>${parseISODate(video.published_at)}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>`;
+                })
+
+                $(`#past_collabs_videos`).html(past_collab_content)
+            }
+
         },
         error: function() {
-            console.log("Error Loading")
+            $(`.live_collabs`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
+            $(`#past_collabs_videos`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
         }
     })
 
-    // livestreams and videos
+    // livestreams, upcoming, and videos
     $.ajax({
         url: `https://holodex.net/api/v2/channels/${channel}/videos`,
         headers: { 'X-APIKEY': holodexApiKey },
         timeout: 5000,
         success: function(res) {
-            console.log(res)
             let live_videos = []
             let live_counter = 0
             let upcoming_videos = []
@@ -192,36 +250,25 @@ $(document).ready(function() {
             var lfgreine = document.getElementById('lfgreine').value;
             var reineuuu = document.getElementById('reineuuu').value;
 
-            for (let video in res) {
-                if (video.status == 'upcoming') {
+            res.forEach(video => {
+                if (video.status == "upcoming") {
                     upcoming_videos.push(video)
                     upcoming_counter += 1
                 }
-                else if (video.status == 'live') {
+                else if (video.status == "live") {
                     live_videos.push(video)
                     live_counter += 1
                 }
-            }
+            })
 
-            live_counter += 1
-            live_videos.push(res[3])
-
-            for (let video in res) {
-                if (past_counter == 5) {
-                    break
-                }
-                if (video.status == 'past' && video.type == 'stream') {
+            res.forEach(video => {
+                if (video.status == "past" && video.type == "stream" && past_counter < 5) {
                     past_videos.push(video)
                     past_counter += 1
                 }
-            }
-
-            console.log(live_counter)
-
-            console.log(past_videos)
+            })
 
             if (live_counter > 0) {
-                console.log("live")
                 $(`.check-live`).html(`
                     <div class="columns is-centered">
                         <img src="${lfgreine}" alt="Reine LFG">
@@ -233,35 +280,39 @@ $(document).ready(function() {
                         LET'S GOOOOO <br> NOW WATCH HER
                     </p>`
                 )
-                $(`.livestream`).html(`
-                    <h1 class="title has-text-centered">
-                        Current Livestream
-                    </h1>
-                    <div style="width: 100%; margin: auto;">
-                    {% for video in live_videos %}
-        <div class="box">
-          <a class="youtube_link" href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank" rel="noopener noreferrer">
-            <article class="media">
-              <div class="media-left">
-                <figure class="image">
-                  <img src="https://img.youtube.com/vi/{{ video.id }}/default.jpg" width="480" height="360" alt="Thumbnail Image">
-                </figure>
-              </div>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>{{ video.title }}</strong> <br> <small>{{ video.published_at|parse_iso|date:'d/m/Y' }}</small>
-                  </p>
-                </div>
-              </div>
-            </article>
-          </a>
-        </div>
-        {% endfor %}`
-                )
+
+                let livestream_content = `
+                <h1 class="title has-text-centered">
+                    Current Livestream
+                </h1>
+                <div style="width: 100%; margin: auto;">`;
+
+                live_videos.forEach(video => {
+                    livestream_content += `
+                    <div class="box">
+                        <a class="youtube_link" href="https://www.youtube.com/watch?v=${video.id}" target="_blank" rel="noopener noreferrer">
+                            <article class="media">
+                                <div class="media-left">
+                                    <figure class="image">
+                                        <img src="https://img.youtube.com/vi/${video.id}/default.jpg" width="480" height="360" alt="Thumbnail Image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>${video.title}</strong> <br> <small>${parseISODate(video.published_at)}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    </div>`;
+                })
+
+                livestream_content += `</div>`;
+                $(`.livestream`).html(livestream_content)
             }
             else if (live_counter == 0) {
-                console.log("not live")
                 $(`.check-live`).html(`
                     <div class="columns is-centered">
                         <img src="${reineuuu}" alt="Reine UUUU">
@@ -273,10 +324,80 @@ $(document).ready(function() {
                         uuuuuuuuuuuu
                     </p>`
                 )
+                $(`.livestream`).html(``)
+            }
+            
+            if (upcoming_counter > 0) {
+                let upcoming_content = `
+                <br>
+                <h1 class="title has-text-centered">
+                    Upcoming Livestreams
+                </h1>
+                <div style="width: 100%; margin: auto;">`;
+
+                upcoming_videos.forEach(video => {
+                    upcoming_content += `
+                    <div class="box">
+                        <a class="youtube_link" href="https://www.youtube.com/watch?v=${video.id}" target="_blank" rel="noopener noreferrer">
+                            <article class="media">
+                                <div class="media-left">
+                                    <figure class="image">
+                                        <img src="https://img.youtube.com/vi/${video.id}/default.jpg" width="480" height="360" alt="Thumbnail Image">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <div class="content">
+                                        <p>
+                                            <strong>${video.title}</strong> <br> <small>${parseISODate(video.published_at)}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    </div>`;
+                })
+
+                upcoming_content += `</div>`;
+                $(`.upcoming`).html(upcoming_content)
+            }
+            else if (upcoming_counter == 0) {
+                $(`.upcoming`).html(``)
+            }
+
+            console.log(past_counter)
+            if (past_counter > 0) {
+                let past_content = `
+                <div style="width: 100%; margin: auto;">`;
+
+                past_videos.forEach(video => {
+                    past_content += `
+                    <div class="box">
+                    <a class="youtube_link" href="https://www.youtube.com/watch?v=${video.id}" target="_blank" rel="noopener noreferrer">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image">
+                                    <img src="https://img.youtube.com/vi/${video.id}/default.jpg" width="480" height="360" alt="Thumbnail Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                    <strong>${video.title}</strong> <br> <small>${parseISODate(video.published_at)}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                </div>`;
+                })
+
+                $(`#past_videos`).html(past_content)
             }
         },
         error: function() {
-            console.log("Error Loading")
+            $(`.check-live`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
+            $(`.upcoming`).html(``)
+            $(`#past_videos`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
         }
     })
 
@@ -285,22 +406,84 @@ $(document).ready(function() {
         url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId=${oriSongs}&key=${apiKey}`,
         timeout: 5000,
         success: function(res) {
-            console.log(res)
+            res = res.items
+            let ori_songs_videos = []
+
+            res.forEach(video => {
+                ori_songs_videos.push(video)
+            })
+
+            let ori_songs_content = `<div style="width: 100%; margin: auto;">`;
+
+            ori_songs_videos.forEach(video => {
+                ori_songs_content += `
+                <div class="box">
+                    <a class="youtube_link" href="https://www.youtube.com/watch?v=${video.contentDetails.videoId}" target="_blank" rel="noopener noreferrer">
+                    <article class="media">
+                        <div class="media-left">
+                        <figure class="image">
+                            <img src="${video.snippet.thumbnails.default.url}" width="480" height="360" alt="Thumbnail Image">
+                        </figure>
+                        </div>
+                        <div class="media-content">
+                        <div class="content">
+                            <p>
+                            <strong>${video.snippet.title}</strong> <br> <small>${parseISODate(video.snippet.publishedAt)}</small>
+                            </p>
+                        </div>
+                        </div>
+                    </article>
+                    </a>
+                </div>`;
+            })
+
+            $(`#ori_songs_list`).html(ori_songs_content)
         },
         error: function() {
-            console.log("Error Loading")
+            $(`#ori_songs_list`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
         }
     });
 
-    // Fetch original songs
+    // Fetch cover songs
     $.ajax({
         url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId=${coverSongs}&key=${apiKey}`,
         timeout: 5000,
         success: function(res) {
-            console.log(res)
+            res = res.items
+            let cover_songs_videos = []
+
+            res.forEach(video => {
+                cover_songs_videos.push(video)
+            })
+
+            let cover_songs_content = `<div style="width: 100%; margin: auto;">`;
+
+            cover_songs_videos.forEach(video => {
+                cover_songs_content += `
+                <div class="box">
+                    <a class="youtube_link" href="https://www.youtube.com/watch?v=${video.contentDetails.videoId}" target="_blank" rel="noopener noreferrer">
+                    <article class="media">
+                        <div class="media-left">
+                        <figure class="image">
+                            <img src="${video.snippet.thumbnails.default.url}" width="480" height="360" alt="Thumbnail Image">
+                        </figure>
+                        </div>
+                        <div class="media-content">
+                        <div class="content">
+                            <p>
+                            <strong>${video.snippet.title}</strong> <br> <small>${parseISODate(video.snippet.publishedAt)}</small>
+                            </p>
+                        </div>
+                        </div>
+                    </article>
+                    </a>
+                </div>`;
+            })
+
+            $(`#cover_songs_list`).html(cover_songs_content)
         },
         error: function() {
-            console.log("Error Loading")
+            $(`#cover_songs_list`).html(`Failed to load data, please refresh the page \n Is the Holodex API taking too long?`)
         }
     });
 });
