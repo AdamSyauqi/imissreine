@@ -15,7 +15,7 @@ function openTab(evt, tabName) {
 var mep_loud = document.getElementById("punch-sound-1");
 mep_loud.volume = 0.7;
 
-  function getCookie(name) {
+function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
@@ -106,8 +106,8 @@ $(document).ready(function() {
     document.getElementById('holodex-api-key').outerHTML = "";
 
     const channel = 'UChgTyjG-pdNvxxhdsXfHQ5Q';
-    const oriSongs = 'PLrALGrrF-6IWBHB3pdou530lFKrSsCtD4';
-    const coverSongs = 'PLrALGrrF-6IVnnurSv7Nxdxpo5zJmmjnC';
+    const oriSongs = 'PLImqk9B7uZvD1V1wjJQ3PPVmPLsSkoP-B';
+    const coverSongs = 'PLImqk9B7uZvCiAToT79-heLOII99c9yKh';
 
     function parseISODate(dateString) {
         const date = new Date(dateString);
@@ -402,7 +402,7 @@ $(document).ready(function() {
 
     // Fetch original songs
     $.ajax({
-        url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId=${oriSongs}&key=${apiKey}`,
+        url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId=${oriSongs}&key=${apiKey}`,
         timeout: 5000,
         success: function(res) {
             res = res.items
@@ -427,7 +427,7 @@ $(document).ready(function() {
                         <div class="media-content">
                         <div class="content">
                             <p>
-                            <strong>${video.snippet.title}</strong> <br> <small>${parseISODate(video.snippet.publishedAt)}</small>
+                            <strong>${video.snippet.title}</strong> <br> <small>${parseISODate(video.contentDetails.videoPublishedAt)}</small>
                             </p>
                         </div>
                         </div>
@@ -445,7 +445,7 @@ $(document).ready(function() {
 
     // Fetch cover songs
     $.ajax({
-        url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=25&playlistId=${coverSongs}&key=${apiKey}`,
+        url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId=${coverSongs}&key=${apiKey}`,
         timeout: 5000,
         success: function(res) {
             res = res.items
@@ -470,7 +470,7 @@ $(document).ready(function() {
                         <div class="media-content">
                         <div class="content">
                             <p>
-                            <strong>${video.snippet.title}</strong> <br> <small>${parseISODate(video.snippet.publishedAt)}</small>
+                            <strong>${video.snippet.title}</strong> <br> <small>${parseISODate(video.contentDetails.videoPublishedAt)}</small>
                             </p>
                         </div>
                         </div>
