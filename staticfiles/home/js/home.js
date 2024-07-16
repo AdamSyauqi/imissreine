@@ -121,7 +121,7 @@ $(document).ready(function() {
     $.ajax({
         url: `https://holodex.net/api/v2/channels/${channel}`,
         headers: { 'X-APIKEY': holodexApiKey },
-        timeout: 5000,
+        timeout: 20000,
         success: function(res) {
             $(`#channel-info`).html(`<a class="youtube_link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@PavoliaReine"> <div class="title"> <div class="media"> <div class="media-left"> <figure class="image is-48x48"> <img src="${res.photo}" alt="Reine Youtube image"> </figure> </div> <div class="media-content"> <p class="title is-4"> ${res.name}</p> </div> </div> </div> <p>${res.description.split(`【`)[0]}</p> </a>`)
             $(`#statistics`).html(`<div class="level">
@@ -161,7 +161,7 @@ $(document).ready(function() {
     $.ajax({
         url: `https://holodex.net/api/v2/channels/${channel}/collabs`,
         headers: { 'X-APIKEY': holodexApiKey },
-        timeout: 5000,
+        timeout: 20000,
         success: function(res) {
             let live_collab_videos = []
             let live_collab_counter = 0
@@ -237,7 +237,7 @@ $(document).ready(function() {
     $.ajax({
         url: `https://holodex.net/api/v2/channels/${channel}/videos`,
         headers: { 'X-APIKEY': holodexApiKey },
-        timeout: 5000,
+        timeout: 20000,
         success: function(res) {
             let live_videos = []
             let live_counter = 0
@@ -403,7 +403,7 @@ $(document).ready(function() {
     // Fetch original songs
     $.ajax({
         url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId=${oriSongs}&key=${apiKey}`,
-        timeout: 5000,
+        timeout: 20000,
         success: function(res) {
             res = res.items
             let ori_songs_videos = []
@@ -446,7 +446,7 @@ $(document).ready(function() {
     // Fetch cover songs
     $.ajax({
         url: `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&part=snippet&maxResults=50&playlistId=${coverSongs}&key=${apiKey}`,
-        timeout: 5000,
+        timeout: 20000,
         success: function(res) {
             res = res.items
             let cover_songs_videos = []
