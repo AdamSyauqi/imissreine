@@ -21,7 +21,6 @@ get_env = os.environ.get
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # .env variables
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
@@ -37,6 +36,21 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+# DigitalOcean Spaces settings for serving large images and videos
+DO_SPACES_NAME = os.getenv('DO_SPACES_NAME')  # Your Space name
+DO_SPACES_REGION = os.getenv('DO_SPACES_REGION')  # Your Space region
+DO_SPACES_ENDPOINT = f'https://{DO_SPACES_NAME}.{DO_SPACES_REGION}.digitaloceanspaces.com'
+
+# Specific folders within your Space
+DO_SPACES_FANARTS_LOCATION = 'fanart'
+DO_SPACES_COSPLAYS_LOCATION = 'cosplay'
+DO_SPACES_TEST_LOCATION = 'test'
+
+# URLs for each folder
+DO_SPACES_FANARTS_URL = f'{DO_SPACES_ENDPOINT}/{DO_SPACES_FANARTS_LOCATION}/'
+DO_SPACES_COSPLAYS_URL = f'{DO_SPACES_ENDPOINT}/{DO_SPACES_COSPLAYS_LOCATION}/'
+DO_SPACES_TEST_URL = f'{DO_SPACES_ENDPOINT}/{DO_SPACES_TEST_LOCATION}/'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.imissreine.com',

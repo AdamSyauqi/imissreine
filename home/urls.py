@@ -8,4 +8,5 @@ urlpatterns = [
     path('meptember24', views.meptember24, name="meptember24"),
     path('increment/', views.increment_counter, name='increment_counter'),
     path('generate-image/', views.generate_image, name='generate_image'),
+    path('reineistriauki', views.reineistriauki, name="reineistriauki"),
 ]

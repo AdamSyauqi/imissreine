@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="{% static 'home/js/meptember24.js' %}" defer></script>
+    <style>
+        .construction-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .construction-text {
+            font-size: 1.5rem;
+            color: #4a4a4a;
+        }
+        .image-source {
+            font-size: small;
+        }
+        .construction-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">
+    <input type="hidden" id="cosplays_url" value="{{ cosplays_url }}">
+    <section class="section">
+        <div class="container">
+            <div class="gallery">
+                <div id="file-list">
+                    <!-- Files and folders will be listed here -->
+                </div> 
+            </div>
+            
+        </div>
+    </section>
+</body>
+</html>

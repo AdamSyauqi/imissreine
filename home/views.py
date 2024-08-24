@@ -1,18 +1,26 @@
-from django.shortcuts import render
-import requests
 import json
 import os
-import time
+import io
 from datetime import datetime, timedelta
+from PIL import Image, ImageDraw, ImageFont
+
+from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from .models import ClickCounter
-from PIL import Image, ImageDraw, ImageFont
-import io
 from django.urls import reverse
+from django.conf import settings
 # Create your views here.
 
 def meptember24(request):
     return render(request, 'home/meptember24.html')
+
+def reineistriauki(request):
+    context = {
+        'fanarts_url': settings.DO_SPACES_FANARTS_URL,
+        'cosplays_url': settings.DO_SPACES_COSPLAYS_URL,
+        # other context variables
+    }
+    return render(request, 'home/meptember24_placeholder.html', context)
 
 def home(request):
     try:
