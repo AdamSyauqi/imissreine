@@ -1,0 +1,76 @@
+body {
+    background-image: url('../bg/MEP\ station\ Wallpaper.png'); /* Update with your actual image name */
+    background-repeat: repeat-y; /* Repeat the background image vertically */
+    background-size: cover; /* Scale the image to cover the full width and height of the body without distortion */
+    background-attachment: fixed; /* Ensures the background remains fixed while scrolling */
+    background-position: center top; /* Center the image horizontally, start from the top */
+    margin: 0; /* Remove any default margin for the body */
+    padding: 0; /* Remove any default padding for the body */
+}
+
+h2 {
+    background-color: rgba(255, 255, 255, 1); /* White background with 100% opacity */
+    color: #333; /* Text color (dark gray) */
+    padding: 10px 15px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners for a nicer look */
+    display: inline-block; /* Ensures background color only covers the text area */
+    margin: 10px 0; /* Adjusts space around the heading */
+}
+
+.card-image {
+    height: 400px; /* Set a consistent height for all cards */
+    overflow: hidden; /* Hide overflow for consistent sizing */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-image img,
+.card-image video {
+    width: 95%; /* Keep aspect ratio */
+    height: 95%; /* Make the height fill the container */
+    object-fit: cover; /* Crop to fit the container without stretching */
+}
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 100vh; /* Make sure the box itself does not exceed the viewport height */
+    max-width: 100%; /* Make sure the box itself does not exceed the viewport width */
+    width: 100%;
+}
+
+.modal-content .box {
+    max-height: 100vh; /* Make sure the box itself does not exceed the viewport height */
+    max-width: 100%; /* Make sure the box itself does not exceed the viewport width */
+    overflow: hidden; /* Prevent overflowing content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content .box img,
+.modal-content .box video {
+    max-height: 90vh; /* Restrict the maximum height to 90% of viewport height */
+    max-width: 90vw; /* Restrict the maximum width to 90% of viewport width */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Scale down the content while maintaining its aspect ratio */
+}
+
+.modal-content .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; /* Initially hidden */
+}
+
+.is-loading .loading-spinner {
+    display: block; /* Show spinner when loading */
+}
+
+.is-loading .lazyload {
+    display: none; /* Hide the actual media until it's loaded */
+}

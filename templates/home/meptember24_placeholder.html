@@ -8,21 +8,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'home/js/meptember24.js' %}" defer></script>
+    <link href="{% static 'home/css/meptember24.css' %}" rel="stylesheet">
 </head>
 <body>
     <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">
     <input type="hidden" id="cosplays_url" value="{{ cosplays_url }}">
     <section class="section">
         <div class="container">
-            <div class="fixed-grid has-4-cols" id="gallery_container">
-
+            <h2 class="title">Cosplays</h2>
+            <div class="columns is-multiline" id="cosplay_container">
+                <!-- Dynamically generated content will be added here -->
             </div>
-            <div class="gallery">
-                <div id="file-list">
-                    <!-- Files and folders will be listed here -->
-                </div> 
+            <h2 class="title">Fanarts</h2>
+            <div class="columns is-multiline" id="fanart_container">
+                <!-- Dynamically generated content will be added here -->
             </div>
-            
         </div>
     </section>
 </body>
