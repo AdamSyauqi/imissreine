@@ -72,7 +72,7 @@ async function fetchAndDisplayContents(spaceUrl, folder = '') {
                     const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
 
                     // Then use it to select the element
-                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter').addClass(columnSize);
+                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter').addClass('is-one-quarter');
                 };
 
             } else if (/\.(mp4|webm|ogg)$/i.test(fileName)) {
@@ -95,7 +95,7 @@ async function fetchAndDisplayContents(spaceUrl, folder = '') {
                     const aspectRatio = video.videoWidth / video.videoHeight;
                     const columnSize = aspectRatio > 1 ? 'is-half' : 'is-one-quarter';
                     const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
-                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter is-half').addClass(columnSize);
+                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter is-half').addClass('is-one-quarter');
                 };
             }
         }

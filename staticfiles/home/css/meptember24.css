@@ -1,11 +1,35 @@
-body {
-    background-image: url('../bg/MEP\ station\ Wallpaper.png'); /* Update with your actual image name */
+
+
+#cos {
+    background-image: url('../bg/MEP\ station\ Wallpaper.png');
     background-repeat: repeat-y; /* Repeat the background image vertically */
     background-size: cover; /* Scale the image to cover the full width and height of the body without distortion */
-    background-attachment: fixed; /* Ensures the background remains fixed while scrolling */
+    background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
     background-position: center top; /* Center the image horizontally, start from the top */
-    margin: 0; /* Remove any default margin for the body */
-    padding: 0; /* Remove any default padding for the body */
+
+}
+
+#fan {
+    background-image: url('../bg/flowers.png');
+    background-repeat: repeat-y; /* Repeat the background image vertically */
+    background-size: cover; /* Scale the image to cover the full width and height of the body without distortion */
+    background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
+    background-position: center top; /* Center the image horizontally, start from the top */
+
+}
+
+#cosplay_container {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 1rem;
+}
+
+#fanart_title {
+    margin-top: 8rem;
+}
+
+#fanart_container {
+    background-color: rgba(255, 255, 255, 0);
+    padding: 1rem;
 }
 
 h2 {

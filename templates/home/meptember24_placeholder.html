@@ -13,13 +13,17 @@
 <body>
     <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">
     <input type="hidden" id="cosplays_url" value="{{ cosplays_url }}">
-    <section class="section">
+    <section class="section" id="cos">
         <div class="container">
-            <h2 class="title">Cosplays</h2>
+            <h2 class="title" id="cosplay_title">Cosplays</h2>
             <div class="columns is-multiline" id="cosplay_container">
                 <!-- Dynamically generated content will be added here -->
             </div>
-            <h2 class="title">Fanarts</h2>
+        </div>
+    </section>
+    <section class="section" id="fan">
+        <div class="container">
+            <h2 class="title" id="fanart_title">Fanarts</h2>
             <div class="columns is-multiline" id="fanart_container">
                 <!-- Dynamically generated content will be added here -->
             </div>
