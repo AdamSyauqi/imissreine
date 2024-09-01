@@ -7,21 +7,45 @@
     <title>Under Construction!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <script src="{% static 'home/js/meptember24.js' %}" defer></script>
     <link href="{% static 'home/css/meptember24.css' %}" rel="stylesheet">
+    <script>
+        // Ensure the page starts at the top on reload
+        window.onbeforeunload = function () {
+          window.scrollTo(0, 0);
+        };
+      </script>      
 </head>
 <body>
     <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">
     <input type="hidden" id="cosplays_url" value="{{ cosplays_url }}">
-    <section class="section" id="cos">
+    <section class="hero" id="landing">
+        <video autoplay muted loop id="background-video">
+            <source src="{% static 'home/bg/landing_background-25.webm' %}" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="logo-container">
+            <video id="logo-video" autoplay muted loop>
+                <source src="{% static 'home/bg/logo.webm' %}" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="text-overlay">
+            <p>Scroll below to see our fan project submissions!</p>
+        </div>
+    </section>
+    <section class="section" id="submission">
         <div class="container">
             <h2 class="title" id="cosplay_title">Cosplays</h2>
             <div class="columns is-multiline" id="cosplay_container">
                 <!-- Dynamically generated content will be added here -->
             </div>
         </div>
-    </section>
-    <section class="section" id="fan">
         <div class="container">
             <h2 class="title" id="fanart_title">Fanarts</h2>
             <div class="columns is-multiline" id="fanart_container">

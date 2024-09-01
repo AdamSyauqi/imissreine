@@ -1,21 +1,66 @@
-
-
-#cos {
-    background-image: url('../bg/MEP\ station\ Wallpaper.png');
-    background-repeat: repeat-y; /* Repeat the background image vertically */
-    background-size: cover; /* Scale the image to cover the full width and height of the body without distortion */
-    background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
-    background-position: center top; /* Center the image horizontally, start from the top */
-
+#landing {
+    height: 100vh; /* Full viewport height */
 }
 
-#fan {
+#background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1; /* Background video layer */
+}
+
+.logo-container {
+    position: absolute; /* Absolutely position the container */
+    top: 40%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center the container using translate */
+    z-index: 3; /* Logo video layer above background */
+    max-width: 800px; /* Set a maximum width for the logo video */
+    width: 100%; /* Default width set to 100% to allow it to shrink */
+    height: auto; /* Maintain aspect ratio */
+}
+
+#logo-video {
+    width: 100%; /* Take full width of the container */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Contain the logo within its container */
+}
+
+.text-overlay {
+    position: absolute; /* Absolutely position the text container */
+    top: 55%; /* Adjust the position based on your needs */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for true centering horizontally */
+    z-index: 2; /* Text layer above background video but below logo */
+    color: rgb(0, 102, 255); /* Text color */
+    text-align: center; /* Center align text */
+    padding: 10px; /* Optional padding for spacing */
+    width: 80%; /* Optional width to control text container size */
+    font-family: "Luckiest Guy", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 28px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .logo-container {
+        max-width: 600px; /* Adjust max-width for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-container {
+        max-width: 400px; /* Further adjust for very small screens */
+    }
+}
+
+#submission {
     background-image: url('../bg/flowers.png');
     background-repeat: repeat-y; /* Repeat the background image vertically */
     background-size: cover; /* Scale the image to cover the full width and height of the body without distortion */
     background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
     background-position: center top; /* Center the image horizontally, start from the top */
-
 }
 
 #cosplay_container {
