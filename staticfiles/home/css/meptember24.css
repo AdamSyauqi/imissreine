@@ -15,7 +15,7 @@
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Center the container using translate */
     z-index: 3; /* Logo video layer above background */
-    max-width: 800px; /* Set a maximum width for the logo video */
+    max-width: 500px; /* Set a maximum width for the logo video */
     width: 100%; /* Default width set to 100% to allow it to shrink */
     height: auto; /* Maintain aspect ratio */
 }
@@ -43,17 +43,17 @@
 }
 
 /* Media query for smaller screens */
-@media (max-width: 768px) {
-    .logo-container {
-        max-width: 600px; /* Adjust max-width for smaller screens */
+/* @media (max-width: 768px) {
+    .text-overlay {
+        font-size: 20px;
     }
 }
 
 @media (max-width: 480px) {
-    .logo-container {
-        max-width: 400px; /* Further adjust for very small screens */
+    .text-overlay {
+        font-size: 20px;
     }
-}
+} */
 
 #submission {
     background-image: url('../bg/flowers.png');
