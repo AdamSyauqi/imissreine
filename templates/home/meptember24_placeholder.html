@@ -5,19 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Under Construction!</title>
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
+    <script src="https://kit.fontawesome.com/18744820a2.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
     <script src="{% static 'home/js/meptember24.js' %}" defer></script>
     <link href="{% static 'home/css/meptember24.css' %}" rel="stylesheet">
+
     <script>
         // Ensure the page starts at the top on reload
         window.onbeforeunload = function () {
           window.scrollTo(0, 0);
         };
-      </script>      
+    </script>      
 </head>
 <body>
     <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">

@@ -1,106 +1,97 @@
 $(document).ready(function () {
     const spaceUrl = "https://reinemeptember.sgp1.digitaloceanspaces.com";
-    fetchAndDisplayContents(spaceUrl);
+    
+    // Load JSON data and then fetch and display contents
+    loadJsonData('/static/home/json/Reine_MepTember_2024_With_Fanart.json').then(jsonData => {
+        fetchAndDisplayContents(spaceUrl, jsonData);
+    }).catch(error => {
+        console.error('Error loading JSON data:', error);
+    });
 });
 
-// Function to fetch and display contents of the DigitalOcean Space
-async function fetchAndDisplayContents(spaceUrl, folder = '') {
+async function loadJsonData(jsonPath) {
     try {
-        // Fetch the XML response from the Space
+        const response = await fetch(jsonPath);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch JSON data: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        return jsonData;
+    } catch (error) {
+        console.error('Error fetching JSON file:', error);
+        throw error;
+    }
+}
+
+// Function to fetch and display contents of the DigitalOcean Space
+async function fetchAndDisplayContents(spaceUrl, birthdayMessages, folder = '') {
+    try {
         const response = await fetch(`${spaceUrl}?prefix=${folder}`);
 
         if (!response.ok) {
             throw new Error(`Failed to fetch the contents: ${response.status}`);
         }
 
-        // Parse the XML response
         const text = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(text, "text/xml");
 
-        // Get the file and folder contents from the XML
         const contents = xmlDoc.getElementsByTagName("Contents");
 
-        // Clear the containers
         $('#cosplay_container').html('');
         $('#fanart_container').html('');
         let modalsHtml = '';
 
-        // List all files (Contents)
         for (let content of contents) {
             const fileName = content.getElementsByTagName("Key")[0].textContent;
 
-            // Skip thumbnail files in this loop, we handle them separately
-            if (fileName.includes('_thumb')) {
-                continue;
-            }
+            if (fileName.includes('_thumb')) continue;
 
             const fileUrl = `${spaceUrl}/${fileName}`;
             let thumbUrl;
 
-            // Check if the file is an image or a video
             if (/\.(mp4|webm|ogg)$/i.test(fileName)) {
-                // For videos, generate a thumbnail URL with .jpg extension
                 thumbUrl = `${spaceUrl}/${fileName.replace(/\.(mp4|webm|ogg)$/i, '_thumb.jpg')}`;
             } else {
-                // For images, replace the extension with '_thumb' preserving the original extension
                 thumbUrl = `${spaceUrl}/${fileName.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '_thumb.$1')}`;
             }
 
-            // Determine the file type by extension
+            const container = fileName.startsWith('cosplay/') ? '#cosplay_container' : '#fanart_container';
+            const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
+
+            // Extract submitter name from the file name
+            const submitterName = fileName.split('/')[1].split('.')[0]; // Extract name without prefix and extension
+            const birthdayData = findBirthdayData(submitterName, birthdayMessages);
+
             if (/\.(jpg|jpeg|png|gif|webp)$/i.test(fileName)) {
-                // If file is an image
                 const img = new Image();
                 img.src = thumbUrl;
-
-                // Determine which container to append to
-                const container = fileName.startsWith('cosplay/') ? '#cosplay_container' : '#fanart_container';
-
-                // Create a card with the thumbnail
-                const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', 'image', fileUrl);
+                const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', 'image', fileUrl, birthdayData);
                 $(container).append(cardHtml);
 
-                // Prepare modal HTML for the full image with lazy loading
-                modalsHtml += createModalHtml(fileUrl, fileName, 'image');
+                modalsHtml += createModalHtml(fileUrl, fileName, 'image', birthdayData);
 
-                // Auto-check for portrait or landscape once thumbnail is loaded
                 img.onload = function() {
                     const aspectRatio = img.width / img.height;
                     const columnSize = aspectRatio > 1 ? 'is-half' : 'is-one-quarter';
-
-                    // Sanitize the fileName to create a valid ID
-                    const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
-
-                    // Then use it to select the element
                     $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter').addClass('is-one-quarter');
                 };
-
             } else if (/\.(mp4|webm|ogg)$/i.test(fileName)) {
-                // If file is a video
                 const video = document.createElement('video');
                 video.src = fileUrl;
-
-                // Determine which container to append to
-                const container = fileName.startsWith('cosplay/') ? '#cosplay_container' : '#fanart_container';
-
-                // Create a card with the thumbnail
-                const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', 'video', fileUrl);
+                const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', 'video', fileUrl, birthdayData);
                 $(container).append(cardHtml);
 
-                // Prepare modal HTML for the full video with lazy loading
-                modalsHtml += createModalHtml(fileUrl, fileName, 'video');
+                modalsHtml += createModalHtml(fileUrl, fileName, 'video', birthdayData);
 
-                // Auto-check for portrait or landscape once thumbnail is loaded
                 video.onloadedmetadata = function() {
                     const aspectRatio = video.videoWidth / video.videoHeight;
                     const columnSize = aspectRatio > 1 ? 'is-half' : 'is-one-quarter';
-                    const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
                     $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter is-half').addClass('is-one-quarter');
                 };
             }
         }
 
-        // Append modals to the body
         $('body').append(modalsHtml);
 
     } catch (error) {
@@ -108,19 +99,46 @@ async function fetchAndDisplayContents(spaceUrl, folder = '') {
     }
 }
 
+// Helper function to find the corresponding birthday data
+function findBirthdayData(submitterName, birthdayMessages) {
+    if(submitterName.startsWith("Cosplay_")) {
+        submitterName = submitterName.split("_")[1]
+    }
+
+    if(submitterName.startsWith("Artblocks")) {
+        submitterName = "Artblock's"
+    }
+
+    if(submitterName.startsWith("DarthPika")) {
+        submitterName = "DarthPika26"
+    }
+
+    if(submitterName.startsWith("Kaiカイ")) {
+        submitterName = "Kai/カイ"
+    }
+    return birthdayMessages.find(entry => entry.name === submitterName) || {};
+}
+
 // Helper function to create gallery item HTML with a thumbnail
-function createGalleryItemHtml(thumbUrl, fileName, columnSize, mediaType, fullUrl) {
+function createGalleryItemHtml(thumbUrl, fileName, columnSize, mediaType, fullUrl, birthdayData) {
     const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
+    const { name = 'Anonymous', message = '', contactLink = '' } = birthdayData;
+
+    // Determine the Font Awesome icon to display based on media type
+    const iconClass = mediaType === 'image' ? 'fa-image' : 'fa-video';
+
     return `
         <div class="column ${columnSize}" id="card-${sanitizedFileName}">
             <div class="card" onclick="showModal('${sanitizedFileName}', '${fullUrl}', '${mediaType}')">
                 <div class="card-image">
                     ${mediaType === 'image' ? `<img src="${thumbUrl}" alt="${fileName}" class="media">` : `<img src="${thumbUrl}" alt="${fileName}" class="media">`}
+                    <div class="media-logo-overlay">
+                        <i class="fas ${iconClass} media-icon"></i> <!-- Font Awesome icon -->
+                    </div>
                 </div>
                 <div class="card-content">
                     <div class="media-content">
-                        <p class="title is-4">John Smith</p>
-                        <p class="subtitle is-6">@johnsmith</p>
+                        <p class="title is-4">${name}</p>
                     </div>
                 </div>
             </div>
@@ -129,24 +147,70 @@ function createGalleryItemHtml(thumbUrl, fileName, columnSize, mediaType, fullUr
 }
 
 // Helper function to create modal HTML for full-size media with lazy loading and spinner
-function createModalHtml(fileUrl, fileName, mediaType) {
+function createModalHtml(fileUrl, fileName, mediaType, birthdayData) {
     const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
+    const { name = 'Anonymous', message = '', contactLink = '' } = birthdayData;
+
+    // Generate social media links
+    let socialMediaHtml = '';
+    if (contactLink.startsWith('Manual')) {
+        socialMediaHtml = `<p>Contact: ${contactLink}</p>`;
+    } else {
+        const links = contactLink.split('|');
+        links.forEach(link => {
+            if (link.includes('Discord:')) {
+                const discordId = link.split(':')[1].trim();
+                socialMediaHtml += `
+                    <span class="icon discord-icon-wrapper" data-discord-id="${discordId}">
+                        <a href="#" onclick="event.preventDefault();">
+                            <i class="fab fa-discord" id="social_media_links"></i>
+                        </a>
+                        <div class="discord-tooltip">${discordId}</div>
+                    </span>`;
+            } else {
+                socialMediaHtml += `
+                    <span class="icon">
+                        <a href="${link}" target="_blank">
+                            <i class="fab fa-${getSocialMediaIcon(link)}" id="social_media_links"></i>
+                        </a>
+                    </span>`;
+            }
+        });
+    }
+
     return `
         <!-- Modal HTML for full-size media -->
         <div class="modal" id="modal-${sanitizedFileName}">
             <div class="modal-background"></div>
             <div class="modal-content">
-                <div class="box">
                     <!-- Loading spinner -->
                     <div class="loading-spinner">
                         <div class="spinner"></div>
                     </div>
-                    ${mediaType === 'image' ? `<img data-src="${fileUrl}" alt="${fileName}" class="lazyload">` : `<video data-src="${fileUrl}" controls class="lazyload"></video>`}
-                </div>
+                    <div class="submission_container">
+                        ${mediaType === 'image' ? `<img data-src="${fileUrl}" alt="${fileName}" class="lazyload">` : `<video data-src="${fileUrl}" controls class="lazyload"></video>`}
+                    </div>
+                    <div class="box" id="submission_box">
+                        <div class="content" id="submission_message">
+                            ${name === 'Landacdeus (Art), Tiramints (Animation), Moonmels (Logo & BG Layout)' ? `<h3 class="submission_name" id="nama_panjang">${name}</h3>` : `<h3 class="submission_name">${name}</h3>`}
+                            <hr class="submission_divider">
+                            <p class="submission_message_content">${message}</p>
+                            <div class="social_media_links">${socialMediaHtml}</div>
+                        </div>
+                    </div>
             </div>
             <button class="modal-close is-large" aria-label="close" onclick="closeModal('${sanitizedFileName}')"></button>
         </div>
     `;
+}
+
+// Function to determine social media icon based on link
+function getSocialMediaIcon(link) {
+    if (link.includes('youtube.com')) return 'youtube';
+    if (link.includes('twitter.com') || link.includes('x.com')) return 'twitter';
+    if (link.includes('instagram.com')) return 'instagram';
+    if (link.includes('facebook.com')) return 'facebook';
+    return 'link';
 }
 
 // Function to show modal with lazy loading
@@ -154,23 +218,28 @@ function showModal(fileName, fullUrl, mediaType) {
     const modalElement = $(`#modal-${fileName}`);
     modalElement.addClass('is-active');
 
-    // Show loading spinner
     const spinnerElement = modalElement.find('.loading-spinner');
     spinnerElement.show();
 
-    // Lazy load the full-size image or video
     const mediaElement = modalElement.find(mediaType === 'image' ? 'img.lazyload' : 'video.lazyload');
 
-    // Set the src attribute to load the media
     mediaElement.attr('src', fullUrl);
 
     mediaElement.on('load loadeddata', function () {
-        spinnerElement.hide(); // Hide the spinner when media is loaded
-        mediaElement.removeClass('lazyload'); // Remove lazyload class after loading
+        spinnerElement.hide(); 
+        mediaElement.removeClass('lazyload'); 
     });
 }
 
 // Function to close modal
 function closeModal(fileName) {
-    $(`#modal-${fileName}`).removeClass('is-active');
+    const modalElement = $(`#modal-${fileName}`);
+    modalElement.removeClass('is-active');
+
+    // Pause video if it exists in the modal
+    const videoElement = modalElement.find('video')[0]; // Get the first video element inside the modal
+    if (videoElement) {
+        videoElement.pause(); // Pause the video
+        videoElement.currentTime = 0; // Optional: Reset video to start
+    }
 }
