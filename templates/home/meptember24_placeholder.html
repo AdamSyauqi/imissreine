@@ -32,6 +32,14 @@
 <body>
     <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">
     <input type="hidden" id="cosplays_url" value="{{ cosplays_url }}">
+    <div class="button-group-container">
+        <div class="button-group">
+            <a href="#landing" class="nav-button"><strong>Landing</strong></a>
+            <a href="#cosplay_title" class="nav-button"><strong>Cosplays</strong></a>
+            <a href="#fanart_title" class="nav-button"><strong>Fanarts</strong></a>
+            <a href="#section4" class="nav-button"><strong>Messages</strong></a>
+        </div>
+    </div>
     <section class="hero" id="landing">
         <video autoplay muted loop id="background-video">
             <source src="{% static 'home/bg/landing_background-25.webm' %}" type="video/webm">
@@ -46,7 +54,7 @@
         </div>
 
         <div class="text-overlay">
-            <p>Scroll below to see our fan project submissions!</p>
+            <p>Scroll below or click the button above to navigate our fan project submissions!</p>
         </div>
     </section>
     <section class="section" id="submission">
@@ -64,4 +72,15 @@
         </div>
     </section>
 </body>
+<script>
+    document.querySelectorAll('.nav-button').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            document.querySelector(targetId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>    
 </html>

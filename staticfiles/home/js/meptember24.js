@@ -181,23 +181,23 @@ function createModalHtml(fileUrl, fileName, mediaType, birthdayData) {
     return `
         <!-- Modal HTML for full-size media -->
         <div class="modal" id="modal-${sanitizedFileName}">
-            <div class="modal-background"></div>
+            <div class="modal-background" onclick="closeModal('${sanitizedFileName}')"></div>
             <div class="modal-content">
-                    <!-- Loading spinner -->
-                    <div class="loading-spinner">
-                        <div class="spinner"></div>
+                <!-- Loading spinner -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                </div>
+                <div class="submission_container">
+                    ${mediaType === 'image' ? `<img data-src="${fileUrl}" alt="${fileName}" class="lazyload">` : `<video data-src="${fileUrl}" controls controlsList="nodownload" oncontextmenu="return false;" class="lazyload"></video>`}
+                </div>
+                <div class="box" id="submission_box">
+                    <div class="content" id="submission_message">
+                        <h3 class="submission_name">${name}</h3>
+                        <hr class="submission_divider">
+                        <p class="submission_message_content">${message}</p>
+                        <div class="social_media_links">${socialMediaHtml}</div>
                     </div>
-                    <div class="submission_container">
-                        ${mediaType === 'image' ? `<img data-src="${fileUrl}" alt="${fileName}" class="lazyload">` : `<video data-src="${fileUrl}" controls class="lazyload"></video>`}
-                    </div>
-                    <div class="box" id="submission_box">
-                        <div class="content" id="submission_message">
-                            ${name === 'Landacdeus (Art), Tiramints (Animation), Moonmels (Logo & BG Layout)' ? `<h3 class="submission_name" id="nama_panjang">${name}</h3>` : `<h3 class="submission_name">${name}</h3>`}
-                            <hr class="submission_divider">
-                            <p class="submission_message_content">${message}</p>
-                            <div class="social_media_links">${socialMediaHtml}</div>
-                        </div>
-                    </div>
+                </div>
             </div>
             <button class="modal-close is-large" aria-label="close" onclick="closeModal('${sanitizedFileName}')"></button>
         </div>

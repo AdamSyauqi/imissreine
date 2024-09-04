@@ -123,7 +123,7 @@ h2 {
     opacity: 1; /* Show overlay on hover */
 }
 
-/* Tooltip container */
+/* Base styles for discord icon wrapper and tooltip */
 .discord-icon-wrapper {
     position: relative; /* Position relative to the icon */
     display: inline-block; /* Inline block to align with icons */
@@ -139,12 +139,14 @@ h2 {
     padding: 5px; /* Padding around text */
     border-radius: 5px; /* Rounded corners */
     position: absolute; /* Absolute position to place tooltip */
-    z-index: 1; /* Z-index to appear above other elements */
-    bottom: 125%; /* Position tooltip above the icon */
-    left: 50%; /* Center tooltip horizontally */
+    z-index: 100; /* Z-index to appear above other elements */
+    bottom: 125%; /* Position tooltip above the icon by default */
+    left: 50%; /* Center tooltip horizontally by default */
     transform: translateX(-50%); /* Align tooltip center */
     opacity: 0; /* Initially invisible */
     transition: opacity 0.3s; /* Smooth transition effect */
+    white-space: nowrap; /* Prevent line breaks */
+    max-width: 200px; /* Maximum width for the tooltip */
 }
 
 /* Tooltip arrow */
@@ -165,7 +167,28 @@ h2 {
     opacity: 1; /* Make tooltip opaque */
 }
 
+/* Adjust tooltip positioning on small screens */
+@media (max-width: 768px) {
+    .discord-tooltip {
+        bottom: 50%; /* Position tooltip vertically centered */
+        left: 105%; /* Position tooltip to the right of the icon */
+        transform: translateY(50%); /* Center vertically relative to the icon */
+    }
+
+    /* Adjust tooltip arrow for right positioning */
+    .discord-tooltip::after {
+        top: 50%; /* Center arrow vertically */
+        left: 0; /* Position arrow on the left side */
+        margin-left: 0; /* Remove margin left */
+        margin-top: -5px; /* Center arrow vertically */
+        border-width: 5px; /* Arrow size */
+        border-style: solid;
+        border-color: transparent transparent transparent #333; /* Arrow color */
+    }
+}
+
 .modal-content {
+    z-index: 102;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -173,6 +196,20 @@ h2 {
     max-width: 100%; /* Make sure the box itself does not exceed the viewport width */
     width: 100%;
     flex-direction: row; /* By default, arrange side by side */
+}
+
+.modal-background {
+    position: fixed; /* Ensure it covers the entire screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 101; /* Make sure it sits below the modal content */
+}
+
+.modal-close {
+    z-index: 103;
 }
 
 .modal-content .box {
@@ -229,6 +266,7 @@ h2 {
     }
 
     #submission_message {
+        overflow-y: auto;
         margin: 1rem;
     }
 
@@ -236,6 +274,7 @@ h2 {
         max-width: 80vw;
         min-width: 80vw;
         height: auto;
+        max-height: 35vh;
         margin-bottom: 5%;
     }
 
@@ -273,4 +312,51 @@ h2 {
 
 .is-loading .lazyload {
     display: none; /* Hide the actual media until it's loaded */
+}
+
+/* Style for the compact button group container */
+.button-group-container {
+    position: fixed; /* Fix the button group at the top */
+    top: 10px; /* Add some space from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Shift left by half its width */
+    z-index: 10; /* Ensure it is above other elements */
+    background-color: white;
+    border-radius: 8px; /* Rounded corners */
+    padding: 5px; /* Padding around the button group */
+}
+
+/* Style for the button group */
+.button-group {
+    display: flex; /* Flexbox for horizontal alignment */
+    gap: 5px; /* Space between buttons */
+}
+
+/* Style for the navigation buttons */
+.nav-button {
+    color: black; /* Button text color */
+    background-color: #54d6fc; /* Button background color */
+    padding: 8px 12px; /* Padding for button size */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    font-size: 0.9rem; /* Button text size */
+}
+
+/* Hover effect for buttons */
+.nav-button:hover {
+    background-color: #3192af; /* Darker background on hover */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .button-group-container {
+        top: 5px; /* Less space from the top on mobile */
+        padding: 3px; /* Smaller padding on mobile */
+    }
+
+    .nav-button {
+        font-size: 0.8rem; /* Smaller text size on mobile */
+        padding: 6px 8px; /* Smaller padding on mobile */
+    }
 }
