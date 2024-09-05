@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const spaceUrl = "https://reinemeptember.sgp1.digitaloceanspaces.com";
+    const spaceUrl = document.getElementById('digital_ocean_url').value;
     
     // Load JSON data and then fetch and display contents
     loadJsonData('/static/home/json/Reine_MepTember_2024_With_Fanart.json').then(jsonData => {
@@ -131,7 +131,7 @@ function createGalleryItemHtml(thumbUrl, fileName, columnSize, mediaType, fullUr
         <div class="column ${columnSize}" id="card-${sanitizedFileName}">
             <div class="card" onclick="showModal('${sanitizedFileName}', '${fullUrl}', '${mediaType}')">
                 <div class="card-image">
-                    ${mediaType === 'image' ? `<img src="${thumbUrl}" alt="${fileName}" class="media">` : `<img src="${thumbUrl}" alt="${fileName}" class="media">`}
+                    ${mediaType === 'image' ? `<img src="${thumbUrl}" alt="${fileName}" class="media" oncontextmenu="return false;" ondragstart="return false;">` : `<img src="${thumbUrl}" alt="${fileName}" class="media" oncontextmenu="return false;" ondragstart="return false;">`}
                     <div class="media-logo-overlay">
                         <i class="fas ${iconClass} media-icon"></i> <!-- Font Awesome icon -->
                     </div>
@@ -167,6 +167,13 @@ function createModalHtml(fileUrl, fileName, mediaType, birthdayData) {
                         </a>
                         <div class="discord-tooltip">${discordId}</div>
                     </span>`;
+            } else if (link.includes('https://linktr.ee')) {
+                socialMediaHtml += `
+                    <span class="icon">
+                        <a href="${link}" target="_blank">
+                            <i class="fas fa-${getSocialMediaIcon(link)}" id="social_media_links"></i>
+                        </a>
+                    </span>`;
             } else {
                 socialMediaHtml += `
                     <span class="icon">
@@ -188,7 +195,7 @@ function createModalHtml(fileUrl, fileName, mediaType, birthdayData) {
                     <div class="spinner"></div>
                 </div>
                 <div class="submission_container">
-                    ${mediaType === 'image' ? `<img data-src="${fileUrl}" alt="${fileName}" class="lazyload">` : `<video data-src="${fileUrl}" controls controlsList="nodownload" oncontextmenu="return false;" class="lazyload"></video>`}
+                    ${mediaType === 'image' ? `<img data-src="${fileUrl}" alt="${fileName}" class="lazyload" oncontextmenu="return false;" ondragstart="return false;">` : `<video data-src="${fileUrl}" controls controlsList="nodownload" oncontextmenu="return false;" class="lazyload" ondragstart="return false;"></video>`}
                 </div>
                 <div class="box" id="submission_box">
                     <div class="content" id="submission_message">
@@ -210,6 +217,7 @@ function getSocialMediaIcon(link) {
     if (link.includes('twitter.com') || link.includes('x.com')) return 'twitter';
     if (link.includes('instagram.com')) return 'instagram';
     if (link.includes('facebook.com')) return 'facebook';
+    if (link.includes('linktr.ee')) return 'link';
     return 'link';
 }
 

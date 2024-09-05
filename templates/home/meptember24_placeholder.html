@@ -30,14 +30,13 @@
     </script>      
 </head>
 <body>
-    <input type="hidden" id="fanarts_url" value="{{ fanarts_url }}">
-    <input type="hidden" id="cosplays_url" value="{{ cosplays_url }}">
+    <input type="hidden" id="digital_ocean_url" value="{{ digital_ocean_url }}">
     <div class="button-group-container">
         <div class="button-group">
             <a href="#landing" class="nav-button"><strong>Landing</strong></a>
             <a href="#cosplay_title" class="nav-button"><strong>Cosplays</strong></a>
             <a href="#fanart_title" class="nav-button"><strong>Fanarts</strong></a>
-            <a href="#section4" class="nav-button"><strong>Messages</strong></a>
+            <a href="#all_messages" class="nav-button"><strong>Messages</strong></a>
         </div>
     </div>
     <section class="hero" id="landing">
@@ -70,6 +69,17 @@
                 <!-- Dynamically generated content will be added here -->
             </div>
         </div>
+    </section>
+    <section class="section" id="all_messages">
+        <h2 class="title">Fan Messages</h2>
+        <br>
+        <h2 class="subtitle">Take a look at our messages for you, Reine!</h2>
+        <picture>
+            <!-- Image for mobile devices -->
+            <source srcset="{% static 'home/img/messages_mobile.webp' %}" media="(max-width: 768px)">
+            <!-- Image for larger screens (default) -->
+            <img src="{% static 'home/img/messages.webp' %}" alt="all messages">
+        </picture>
     </section>
 </body>
 <script>

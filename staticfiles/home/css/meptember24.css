@@ -290,7 +290,7 @@ h2 {
     .modal-content .submission_container video {
         margin-top: 5%;
         margin-right: 0%;
-        max-height: 80vh; /* Restrict the maximum height to 80% of viewport height */
+        max-height: 65vh; /* Restrict the maximum height to 65% of viewport height */
     }
 
     .text-overlay {
@@ -359,4 +359,16 @@ h2 {
         font-size: 0.8rem; /* Smaller text size on mobile */
         padding: 6px 8px; /* Smaller padding on mobile */
     }
+}
+
+#all_messages {
+    background-image: url('../bg/MEP station Wallpaper.png');
+    background-repeat: repeat-y; /* Repeat the background image vertically */
+    background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
+    background-position: center top; /* Center the image horizontally, start from the top */
+}
+
+#all_messages img {
+    border: 20px solid white; /* White border with 5px thickness */
+    border-radius: 8px; /* Optional: Rounded corners */
 }

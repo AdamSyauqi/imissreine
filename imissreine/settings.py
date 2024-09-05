@@ -33,7 +33,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,16 +41,6 @@ ALLOWED_HOSTS = ['*']
 DO_SPACES_NAME = os.getenv('DO_SPACES_NAME')  # Your Space name
 DO_SPACES_REGION = os.getenv('DO_SPACES_REGION')  # Your Space region
 DO_SPACES_ENDPOINT = f'https://{DO_SPACES_NAME}.{DO_SPACES_REGION}.digitaloceanspaces.com'
-
-# Specific folders within your Space
-DO_SPACES_FANARTS_LOCATION = 'fanart'
-DO_SPACES_COSPLAYS_LOCATION = 'cosplay'
-DO_SPACES_TEST_LOCATION = 'test'
-
-# URLs for each folder
-DO_SPACES_FANARTS_URL = f'{DO_SPACES_ENDPOINT}/{DO_SPACES_FANARTS_LOCATION}/'
-DO_SPACES_COSPLAYS_URL = f'{DO_SPACES_ENDPOINT}/{DO_SPACES_COSPLAYS_LOCATION}/'
-DO_SPACES_TEST_URL = f'{DO_SPACES_ENDPOINT}/{DO_SPACES_TEST_LOCATION}/'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.imissreine.com',

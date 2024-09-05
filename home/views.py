@@ -16,9 +16,7 @@ def meptember24(request):
 
 def reineistriauki(request):
     context = {
-        'fanarts_url': settings.DO_SPACES_FANARTS_URL,
-        'cosplays_url': settings.DO_SPACES_COSPLAYS_URL,
-        # other context variables
+        'digital_ocean_url': settings.DO_SPACES_ENDPOINT
     }
     return render(request, 'home/meptember24_placeholder.html', context)
 
