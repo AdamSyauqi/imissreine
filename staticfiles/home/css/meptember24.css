@@ -50,12 +50,6 @@
     background-position: center top; /* Center the image horizontally, start from the top */
 }
 
-@media (max-width: 768px) {
-    #submission {
-        background-size: auto;
-    }
-}
-
 #cosplay_container {
     background-color: rgba(255, 255, 255, 0);
     padding: 1rem;
