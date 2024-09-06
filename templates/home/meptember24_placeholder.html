@@ -31,6 +31,12 @@
 </head>
 <body>
     <input type="hidden" id="digital_ocean_url" value="{{ digital_ocean_url }}">
+    <a href="/" class="button" id="homepage">
+        <span class="icon" id="homepage_icon">
+            <i class="fas fa-house"></i>
+        </span>
+        <span id="homepage_text">Back to homepage</span>
+    </a>
     <div class="button-group-container">
         <div class="button-group">
             <a href="#landing" class="nav-button"><strong>Landing</strong></a>
@@ -57,6 +63,10 @@
         </div>
     </section>
     <section class="section" id="submission">
+        <div id="submission_info_container">
+            <h1 class="title" id="submission_info_help">Click the card to view the image or video at full render quality!</h1>
+        </div>
+        <br>
         <div class="container">
             <h2 class="title" id="cosplay_title">Cosplays</h2>
             <div class="columns is-multiline" id="cosplay_container">
@@ -81,6 +91,16 @@
             <img src="{% static 'home/img/messages.webp' %}" alt="all messages">
         </picture>
     </section>
+    <footer class="footer" id="footer">
+        <div class="content has-text-centered">
+          <p>
+            This fansite can't be done without the help from numerous people! Thank you <strong>Tiramints</strong> for the permission to use background and logo for landing section, and also the background used for the cosplay and fanart section. Thank you <strong>DA_4289</strong> for providing background for messages section. Thank you <strong>Reiza Kloise</strong> and <strong>kinggruk</strong> as the project manager for <strong>#ReineMeptember2024</strong> train advertisement and this fansite! And last but certainly not the least, thank you for all Merakyats that has sent fanarts, cosplays, and their messages through this fansite!
+            <br>
+            <br>
+            <strong>imissreine</strong> created by <a target="_blank" rel="noopener noreferrer" href="https://x.com/StrikeDX">StrikeDX (Auki)</a>. Built with <a target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer" href="https://www.djangoproject.com/">Django Framework</a>. <a target="_blank" rel="noopener noreferrer" href="https://github.com/AdamSyauqi/imissreine">Source Code</a>
+          </p>
+        </div>
+    </footer>
 </body>
 <script>
     document.querySelectorAll('.nav-button').forEach(anchor => {

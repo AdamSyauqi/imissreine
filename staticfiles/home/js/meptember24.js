@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const spaceUrl = document.getElementById('digital_ocean_url').value;
+    document.getElementById('digital_ocean_url').outerHTML = "";
     
     // Load JSON data and then fetch and display contents
     loadJsonData('/static/home/json/Reine_MepTember_2024_With_Fanart.json').then(jsonData => {
@@ -138,7 +139,12 @@ function createGalleryItemHtml(thumbUrl, fileName, columnSize, mediaType, fullUr
                 </div>
                 <div class="card-content">
                     <div class="media-content">
-                        <p class="title is-4">${name}</p>
+                        <span class="icon-text">
+                            <span><p class="title is-4">${name}</p></span>
+                            <span class="icon">
+                                <i class="fas ${iconClass} media-icon-below" id="mobile_media_type"></i>
+                            </span>
+                        </span>
                     </div>
                 </div>
             </div>

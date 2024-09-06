@@ -4,17 +4,17 @@ import io
 from datetime import datetime, timedelta
 from PIL import Image, ImageDraw, ImageFont
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from .models import ClickCounter
 from django.urls import reverse
 from django.conf import settings
 # Create your views here.
 
-def meptember24(request):
-    return render(request, 'home/meptember24.html')
-
 def reineistriauki(request):
+    return redirect('meptember24')
+
+def meptember24(request):
     context = {
         'digital_ocean_url': settings.DO_SPACES_ENDPOINT
     }
