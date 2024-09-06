@@ -60,13 +60,13 @@
         </div>
     </div>
     <section class="hero" id="landing">
-        <video autoplay muted loop id="background-video">
+        <video autoplay muted loop id="background-video" oncontextmenu="return false;" ondragstart="return false;">
             <source src="{% static 'home/bg/landing_background-25.webm' %}" type="video/webm">
             Your browser does not support the video tag.
         </video>
 
         <div class="logo-container">
-            <video id="logo-video" autoplay muted loop>
+            <video id="logo-video" autoplay muted loop oncontextmenu="return false;" ondragstart="return false;">
                 <source src="{% static 'home/bg/logo.webm' %}" type="video/webm">
                 Your browser does not support the video tag.
             </video>
