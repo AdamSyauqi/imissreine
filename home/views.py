@@ -12,7 +12,7 @@ from django.conf import settings
 # Create your views here.
 
 def reineistriauki(request):
-    return redirect('meptember24')
+    return redirect('home:meptember24')
 
 def meptember24(request):
     context = {
