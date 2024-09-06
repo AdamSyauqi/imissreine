@@ -50,6 +50,12 @@
     background-position: center top; /* Center the image horizontally, start from the top */
 }
 
+@media (max-width: 768px) {
+    #submission {
+        background-size: auto;
+    }
+}
+
 #cosplay_container {
     background-color: rgba(255, 255, 255, 0);
     padding: 1rem;
@@ -430,5 +436,20 @@ h2 {
 @media (max-width: 768px) {
     #submission_info_help {
         font-size: 20px;
+    }
+}
+
+#cover_song {
+    background-color: lightcyan;
+    display: flex;
+    justify-content: center; /* Horizontally center the iframe */
+    align-items: center; /* Vertically center if necessary */
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    #cover_song iframe {
+        max-width: 100%; /* Ensures responsiveness */
+        height: auto;
     }
 }
