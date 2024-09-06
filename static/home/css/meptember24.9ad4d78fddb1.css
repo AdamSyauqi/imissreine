@@ -43,7 +43,7 @@
 }
 
 #submission {
-    background-image: url('../bg/flowers.webp');
+    background-image: url("../bg/flowers.3e639b308b02.webp");
     background-repeat: repeat-y; /* Repeat the background image vertically */
     background-size: cover; /* Scale the image to cover the full width and height of the body without distortion */
     background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
@@ -375,7 +375,7 @@ h2 {
 }
 
 #all_messages {
-    background-image: url('../bg/MEP station Wallpaper.png');
+    background-image: url("../bg/MEP station Wallpaper.77f2c56f75b4.png");
     background-repeat: repeat-y; /* Repeat the background image vertically */
     background-attachment: scroll; /* Ensures the background remains fixed while scrolling */
     background-position: center top; /* Center the image horizontally, start from the top */

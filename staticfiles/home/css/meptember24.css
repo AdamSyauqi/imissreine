@@ -367,6 +367,13 @@ h2 {
     }
 }
 
+@media (max-width: 576px) {
+    .nav-button {
+        font-size: 0.6rem; /* Smaller text size on mobile */
+        padding: 6px 8px; /* Smaller padding on mobile */
+    }
+}
+
 #all_messages {
     background-image: url('../bg/MEP station Wallpaper.png');
     background-repeat: repeat-y; /* Repeat the background image vertically */
@@ -418,6 +425,12 @@ h2 {
     }
 }
 
+@media (max-width: 576px) {
+    #homepage {
+        font-size: 10px;
+    }
+}
+
 #submission_info_help {
     display: inline-block; /* Ensures the background only stretches to the text width */
     background-color: rgba(255, 255, 255, 1); /* White background with 100% opacity */
@@ -447,9 +460,14 @@ h2 {
     flex-direction: column;
 }
 
+#cover_song iframe {
+    max-width: 100vw; /* Ensures responsiveness */
+    max-height: 100vh;
+}
+
 @media (max-width: 768px) {
     #cover_song iframe {
-        max-width: 100%; /* Ensures responsiveness */
-        height: auto;
+        max-height: 35vh;
+        padding: 1rem;
     }
 }
