@@ -26,7 +26,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
   <link href="{% static 'home/css/home.css' %}" rel="stylesheet">
   <script src="{% static 'home/js/home.js' %}" defer></script>
-  <script src="https://kit.fontawesome.com/18744820a2.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'home/fontawesome/css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'home/fontawesome/css/brands.css' %}">
+  <link rel="stylesheet" href="{% static 'home/fontawesome/css/solid.css' %}">
   <script>
     // Pass the URL to JavaScript
     var incrementCounterUrl = "{% url 'home:increment_counter' %}";
