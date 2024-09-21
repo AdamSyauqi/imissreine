@@ -9,4 +9,5 @@ urlpatterns = [
     path('increment/', views.increment_counter, name='increment_counter'),
     path('generate-image/', views.generate_image, name='generate_image'),
     path('reineistriauki', views.reineistriauki, name="reineistriauki"),
+    path('mepzine', views.mepzine, name="mepzine"),
 ]

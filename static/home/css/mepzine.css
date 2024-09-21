@@ -1,0 +1,39 @@
+html {
+    background-color: lightblue;
+}
+
+html, body { height: 100vh; }
+
+h1, h2 {
+    background-color: rgba(255, 255, 255, 1); /* White background with 100% opacity */
+    color: #333; /* Text color (dark gray) */
+    padding: 10px 15px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners for a nicer look */
+    display: inline-block; /* Ensures background color only covers the text area *//
+}
+
+._df_thumb{
+    width:210px;
+    height: 300px;
+}
+
+#mepzine {
+    text-align: center; /* Center the title and subtitle */
+}
+
+.thumbnail-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the thumbnails horizontally */
+    align-items: center; /* Center the thumbnails vertically */
+    gap: 20px; /* Space between the thumbnails */
+    margin-top: 20px;
+}
+
+#twitter-info {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    margin: 0 auto; /* Centers the box itself */
+    max-width: 80vw; /* Max width of the box */
+    padding: 1rem; /* Adds padding for better spacing */
+}

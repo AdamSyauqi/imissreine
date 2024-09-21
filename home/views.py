@@ -14,6 +14,9 @@ from django.conf import settings
 def reineistriauki(request):
     return redirect('home:meptember24')
 
+def mepzine(request):
+    return render(request, 'home/mepzine.html')
+
 def meptember24(request):
     context = {
         'digital_ocean_url': settings.DO_SPACES_ENDPOINT
