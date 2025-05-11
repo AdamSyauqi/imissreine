@@ -145,13 +145,19 @@ html {
   padding-left: 45px;
 }
 
-#meptember {
+#fixed-button-group {
   position: fixed;
-  right: 10px;
   top: 10px;
-  size: 20px;
-  z-index: 10;
+  right: 10px;
   display: flex;
-  align-items: center; /* Center the icon vertically */
-  justify-content: center; /* Center the content horizontally */
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+/* On mobile: display side by side */
+@media (max-width: 768px) {
+  #fixed-button-group {
+    flex-direction: row;
+  }
 }

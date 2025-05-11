@@ -37,10 +37,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
-# DigitalOcean Spaces settings for serving large images and videos
-DO_SPACES_NAME = os.getenv('DO_SPACES_NAME')  # Your Space name
-DO_SPACES_REGION = os.getenv('DO_SPACES_REGION')  # Your Space region
-DO_SPACES_ENDPOINT = f'https://{DO_SPACES_NAME}.{DO_SPACES_REGION}.digitaloceanspaces.com'
+# DigitalOcean Spaces settings for serving large images and videos (Now Cloudflare's R2 Bucket)
+DO_SPACES_ENDPOINT = "https://cdn.imissreine.com"
 
 CSRF_TRUSTED_ORIGINS = [
     'https://www.imissreine.com',

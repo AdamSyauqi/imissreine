@@ -23,35 +23,71 @@
     <!-- Custom CSS -->
     <link href="{% static 'home/css/mepzine.css' %}" rel="stylesheet" type="text/css">
 </head>
-
-<!-- Dflip Scripts -->
-<!-- Must be out of head -->
-<script src="{% static 'home/dflip/js/libs/jquery.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'home/dflip/js/dflip.min.js' %}" type="text/javascript"></script>
+  
+<!-- Load DFlip -->
+<script src="https://mepzine.imissreine.com/dflip/js/libs/jquery.min.js"></script>
+<script src="https://mepzine.imissreine.com/dflip/js/dflip.min.js"></script>
 
 <body>
-    <section class="section is-fullheight" id="mepzine">
+    <section class="section" id="mepzine">
+        <a href="/" class="button is-info" id="home_button">
+            <span class="icon">
+                <i class="fas fa-house"></i>
+            </span>
+            <span>Back to home</span>
+        </a>
         <h1 class="title">Mepzine</h1>
         <br>
         <h2 class="subtitle">Here we have a selection of published Mepzines available to read on imissreine. Start reading by clicking one of the thumbnails!</h2>
         <!--Thumbnail Lightbox Usage Images-->
         <div class="thumbnail-container">
-            <div class="_df_thumb" source="https://mepzine.sgp1.digitaloceanspaces.com/vol1/en/Mepzine%20Edition%201%20EN.pdf" tags="Volume 1, English" thumb="https://mepzine.sgp1.digitaloceanspaces.com/vol1/en/vol1_en.webp">Volume 1 English</div>
+            <div class="_df_thumb" source="https://mepzine.imissreine.com/vol1/en/Mepzine%20Edition%201%20EN.pdf" tags="Volume 1, English" thumb="https://mepzine.imissreine.com/vol1/en/vol1_en.webp">Volume 1 English</div>
 
-            <div class="_df_thumb" source="https://mepzine.sgp1.digitaloceanspaces.com/vol1/id/Mepzine%20Edisi%201%20ID.pdf" tags="Volume 1, Indonesian" thumb="https://mepzine.sgp1.digitaloceanspaces.com/vol1/id/vol1_id.webp">Volume 1 Indonesian</div>
+            <div class="_df_thumb" source="https://mepzine.imissreine.com/vol1/id/Mepzine%20Edisi%201%20ID.pdf" tags="Volume 1, Indonesian" thumb="https://mepzine.imissreine.com/vol1/id/vol1_id.webp">Volume 1 Indonesian</div>
 
-            <div class="_df_thumb" source="https://mepzine.sgp1.digitaloceanspaces.com/vol2/en/Mepzine%20Edition%202%20EN.pdf" tags="Volume 2, English" thumb="https://mepzine.sgp1.digitaloceanspaces.com/vol2/en/vol2_en.webp">Volume 2 English</div>
+            <div class="_df_thumb" source="https://mepzine.imissreine.com/vol2/en/Mepzine%20Edition%202%20EN.pdf" tags="Volume 2, English" thumb="https://mepzine.imissreine.com/vol2/en/vol2_en.webp">Volume 2 English</div>
 
-            <div class="_df_thumb" source="https://mepzine.sgp1.digitaloceanspaces.com/vol2/id/Mepzine%20Edition%202%20ID.pdf" tags="Volume 2, Indonesian" thumb="https://mepzine.sgp1.digitaloceanspaces.com/vol2/id/vol2_id.webp">Volume 2 Indonesian</div>
+            <div class="_df_thumb" source="https://mepzine.imissreine.com/vol2/id/Mepzine%20Edition%202%20ID.pdf" tags="Volume 2, Indonesian" thumb="https://mepzine.imissreine.com/vol2/id/vol2_id.webp">Volume 2 Indonesian</div>
 
-            <div class="_df_thumb" source="https://mepzine.sgp1.digitaloceanspaces.com/vol3/en/MEPzine%20EN%20Edition%203%20v2.pdf" tags="Volume 3, English" thumb="https://mepzine.sgp1.digitaloceanspaces.com/vol3/en/vol3_en.webp">Volume 3 English</div>
+            <div class="_df_thumb" source="https://mepzine.imissreine.com/vol3/en/MEPzine%20EN%20Edition%203%20v2.pdf" tags="Volume 3, English" thumb="https://mepzine.imissreine.com/vol3/en/vol3_en.webp">Volume 3 English</div>
 
-            <div class="_df_thumb" source="https://mepzine.sgp1.digitaloceanspaces.com/vol3/id/MEPzine%20ID%20Edition%203%20v2.pdf" tags="Volume 3, Indonesian" thumb="https://mepzine.sgp1.digitaloceanspaces.com/vol3/id/vol3_id.webp">Volume 3 Indonesian</div>
+            <div class="_df_thumb" source="https://mepzine.imissreine.com/vol3/id/MEPzine%20ID%20Edition%203%20v2.pdf" tags="Volume 3, Indonesian" thumb="https://mepzine.imissreine.com/vol3/id/vol3_id.webp">Volume 3 Indonesian</div>
         </div>
         <br>
-        <div class="box" id="twitter-info">
-            <a target="_blank" rel="noopener noreferrer" class="button is-link" href="https://x.com/ReidactedReine/status/1704866752771838380?t=6XmMIgIeMaK4pbtc4NaXTA&s=19">Original Mepzine Tweet</a>
-        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+            <h2 class="subtitle has-text-centered">
+              Want to get your own physical copy? Get yours now through one of the contacts below! (Only available until 14th May 2025)
+            </h2>
+          
+            <!-- Contact Buttons -->
+            <div class="buttons is-centered" style="flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
+              <!-- Twitter Contacts -->
+              <a class="button is-link" href="https://twitter.com/kinggruk" target="_blank" rel="noopener noreferrer">
+                <span class="icon"><i class="fab fa-twitter"></i></span>
+                <span>king gruk</span>
+              </a>
+              <a class="button is-link" href="https://twitter.com/Bullrex13" target="_blank" rel="noopener noreferrer">
+                <span class="icon"><i class="fab fa-twitter"></i></span>
+                <span>Mr Turki</span>
+              </a>
+          
+              <!-- Discord Contacts -->
+              <a class="button is-dark" onclick="navigator.clipboard.writeText('reinehusband'); alert('Copied Discord ID: reinehusband');">
+                <span class="icon"><i class="fab fa-discord"></i></span>
+                <span>kinggruk</span>
+              </a>
+              <a class="button is-dark" onclick="navigator.clipboard.writeText('mrturki'); alert('Copied Discord ID: mrturki');">
+                <span class="icon"><i class="fab fa-discord"></i></span>
+                <span>Mr Turki</span>
+              </a>
+            </div>
+          
+            <!-- Original Tweet -->
+            <a target="_blank" rel="noopener noreferrer" class="button is-info" href="https://x.com/ReidactedReine/status/1704866752771838380?t=6XmMIgIeMaK4pbtc4NaXTA&s=19">
+              Original Mepzine Tweet
+            </a>
+          </div>          
+        
     </section>
     <footer class="footer mt-auto" id="footer">
         <div class="content has-text-centered">

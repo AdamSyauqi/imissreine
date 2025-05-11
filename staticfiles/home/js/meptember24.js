@@ -25,79 +25,108 @@ async function loadJsonData(jsonPath) {
 }
 
 // Function to fetch and display contents of the DigitalOcean Space
-async function fetchAndDisplayContents(spaceUrl, birthdayMessages, folder = '') {
+async function fetchAndDisplayContents(spaceUrl, birthdayMessages) {
     try {
-        const response = await fetch(`${spaceUrl}?prefix=${folder}`);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch the contents: ${response.status}`);
-        }
-
-        const text = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(text, "text/xml");
-
-        const contents = xmlDoc.getElementsByTagName("Contents");
-
         $('#cosplay_container').html('');
         $('#fanart_container').html('');
         let modalsHtml = '';
 
-        for (let content of contents) {
-            const fileName = content.getElementsByTagName("Key")[0].textContent;
+        // Load index.json
+        const indexResponse = await fetch(`${spaceUrl}/index.json`);
+        const indexFiles = await indexResponse.json();
 
-            if (fileName.includes('_thumb')) continue;
+        const nameToIndexMap = new Map();
+        indexFiles.forEach((path, i) => {
+            const name = path.split('/').pop().split('_thumb')[0].replace(/\.[^/.]+$/, ''); // base name without extension
+            nameToIndexMap.set(name, i);
+        });
 
-            const fileUrl = `${spaceUrl}/${fileName}`;
-            let thumbUrl;
+        // Sort birthdayMessages based on appearance in index.json
+        birthdayMessages.sort((a, b) => {
+            const nameA = normalizeEntryName(a.name);
+            const nameB = normalizeEntryName(b.name);
+            return (nameToIndexMap.get(nameA) || 9999) - (nameToIndexMap.get(nameB) || 9999);
+        });
 
-            if (/\.(mp4|webm|ogg)$/i.test(fileName)) {
-                thumbUrl = `${spaceUrl}/${fileName.replace(/\.(mp4|webm|ogg)$/i, '_thumb.jpg')}`;
-            } else {
-                thumbUrl = `${spaceUrl}/${fileName.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '_thumb.$1')}`;
+        for (let entry of birthdayMessages) {
+            // Normalize baseName for index lookup
+            let baseName = normalizeEntryName(entry.name);
+
+            // Determine folder and prefix for filename matching
+            let isCosplay = false;
+            let searchName = baseName;
+
+            if (
+                indexFiles.includes(`cosplay/Cosplay_${baseName}.jpg`) || 
+                indexFiles.find(f => f.startsWith(`cosplay/Cosplay_${baseName}.`))
+            ) {
+                isCosplay = true;
+                searchName = `Cosplay_${baseName}`;
             }
 
-            const container = fileName.startsWith('cosplay/') ? '#cosplay_container' : '#fanart_container';
-            const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
+            const folder = isCosplay ? 'cosplay/' : 'fanart/';
 
-            // Extract submitter name from the file name
-            const submitterName = fileName.split('/')[1].split('.')[0]; // Extract name without prefix and extension
+            // Find the main file
+            const matchedFile = indexFiles.find(f => f.startsWith(`${folder}${searchName}.`));
+            if (!matchedFile) {
+                console.warn(`No file found for: ${folder}${searchName}`);
+                continue;
+            }
+
+            const fileName = matchedFile.split('/').pop(); // e.g. Cosplay_YURIKOTIGER.mp4
+            const fullPath = `${folder}${fileName}`;
+            const fileUrl = `${spaceUrl}/${fullPath}`;
+
+            const ext = fileName.split('.').pop().toLowerCase();
+            const baseWithNoExt = fileName.replace(/\.[^/.]+$/, '');
+
+            // Find thumbnail
+            const thumbExt = ['mp4', 'webm', 'ogg'].includes(ext) ? 'jpg' : ext;
+            const thumbFile = indexFiles.find(f => f === `${folder}${baseWithNoExt}_thumb.${thumbExt}`);
+            const thumbUrl = thumbFile ? `${spaceUrl}/${thumbFile}` : fileUrl;
+
+
+            const container = isCosplay ? '#cosplay_container' : '#fanart_container';
+            const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9-_]/g, '-');
+            const mediaType = ['mp4', 'webm', 'ogg'].includes(ext) ? 'video' : 'image';
+
+            const submitterName = baseName;
             const birthdayData = findBirthdayData(submitterName, birthdayMessages);
 
-            if (/\.(jpg|jpeg|png|gif|webp)$/i.test(fileName)) {
+            const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', mediaType, fileUrl, birthdayData);
+            $(container).append(cardHtml);
+            modalsHtml += createModalHtml(fileUrl, fileName, mediaType, birthdayData);
+
+            if (mediaType === 'image') {
                 const img = new Image();
                 img.src = thumbUrl;
-                const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', 'image', fileUrl, birthdayData);
-                $(container).append(cardHtml);
-
-                modalsHtml += createModalHtml(fileUrl, fileName, 'image', birthdayData);
-
-                img.onload = function() {
+                img.onload = function () {
                     const aspectRatio = img.width / img.height;
-                    const columnSize = aspectRatio > 1 ? 'is-half' : 'is-one-quarter';
-                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter').addClass('is-one-quarter');
+                    const columnSize = aspectRatio > 1 ? 'is-one-quarter' : 'is-one-quarter';
+                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter').addClass(columnSize);
                 };
-            } else if (/\.(mp4|webm|ogg)$/i.test(fileName)) {
+            } else {
                 const video = document.createElement('video');
                 video.src = fileUrl;
-                const cardHtml = createGalleryItemHtml(thumbUrl, fileName, 'is-one-quarter', 'video', fileUrl, birthdayData);
-                $(container).append(cardHtml);
-
-                modalsHtml += createModalHtml(fileUrl, fileName, 'video', birthdayData);
-
-                video.onloadedmetadata = function() {
+                video.onloadedmetadata = function () {
                     const aspectRatio = video.videoWidth / video.videoHeight;
-                    const columnSize = aspectRatio > 1 ? 'is-half' : 'is-one-quarter';
-                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter is-half').addClass('is-one-quarter');
+                    const columnSize = aspectRatio > 1 ? 'is-one-quarter' : 'is-one-quarter';
+                    $(`#card-${sanitizedFileName}`).removeClass('is-one-quarter is-half').addClass(columnSize);
                 };
             }
         }
 
         $('body').append(modalsHtml);
-
     } catch (error) {
-        console.error("Error fetching contents:", error);
+        console.error("Error rendering contents:", error);
     }
+}
+
+function normalizeEntryName(name) {
+    return name
+        .replace(/\//g, '')  // Remove slashes
+        .replace(/\s+/g, ' ')  // Collapse multiple spaces
+        .trim();
 }
 
 // Helper function to find the corresponding birthday data
@@ -108,10 +137,6 @@ function findBirthdayData(submitterName, birthdayMessages) {
 
     if(submitterName.startsWith("Artblocks")) {
         submitterName = "Artblock's"
-    }
-
-    if(submitterName.startsWith("DarthPika")) {
-        submitterName = "DarthPika26"
     }
 
     if(submitterName.startsWith("Kaiカイ")) {

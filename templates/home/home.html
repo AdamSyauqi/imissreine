@@ -56,12 +56,16 @@
       <input type="hidden" id="lfgreine" value="{% static 'home/img/lfgreine.gif' %}">
       <input type="hidden" id="smol_reine" value="{% static 'home/img/smol_reine.gif' %}">
 
-      <a href="/reineistriauki" class="button is-link" id="meptember">
-          <span class="icon" id="meptember_icon">
-              <i class="fas fa-brush"></i>
-          </span>
-          <span id="meptember_text">Go to #ReineMeptember2024</span>
-      </a>
+      <div id="fixed-button-group">
+        <a href="/reineistriauki" class="button is-link" id="meptember">
+          <span class="icon"><i class="fas fa-brush"></i></span>
+          <span>Go to #ReineMeptember2024</span>
+        </a>
+        <a href="/mepzine" class="button is-link is-light" id="mepzine_button">
+          <span class="icon"><i class="fas fa-book"></i></span>
+          <span>Mepzines!</span>
+        </a>
+      </div>
 
       <!-- If Reine is not Live -->
       <div class="check-live">
@@ -88,9 +92,11 @@
       </div>
 
       <br>
-      <div class="columns is-centered">
-        <button id="scrollToKhodamButton" class="button is-info">Check your Khodam Below!</button>
-      </div>
+      <div class="has-text-centered">
+        <button id="scrollToKhodamButton" class="button is-info">
+          Check your Khodam Below!
+        </button>
+      </div>      
       <br>
 
       <!-- 4 block Reine's Personal Information -->
@@ -228,73 +234,87 @@
       </div>
 
   <br>
-  <div class="box" id="khodam"> <!-- Cek Khodam -->
+  <div class="box" id="khodam">
     <input type="hidden" id="image-url" value="">
     <h1 class="title is-2 has-text-centered">Cek Your Khodam with Reine!</h1>
-    <h1 class="subtitle is-4 has-text-centered">Enter the month of your birth and what day of the week it is to check your Khodam!</h1>
-    <div class="columns is-mobile is-multiline is-vcentered is-centered pl-6">
-        <!-- Dropdown for Month -->
-        <div class="column is-one-third">
-            <select id="month-select" class="select" onchange="checkSelection()">
-                <option value="">Select Month</option>
-                <option value="January">January</option>
-                <option value="February">February</option>
-                <option value="March">March</option>
-                <option value="April">April</option>
-                <option value="May">May</option>
-                <option value="June">June</option>
-                <option value="July">July</option>
-                <option value="August">August</option>
-                <option value="September">September</option>
-                <option value="October">October</option>
-                <option value="November">November</option>
-                <option value="December">December</option>
-                <!-- More months -->
-            </select>
-        </div>
+    <h2 class="subtitle is-4 has-text-centered">Enter the month of your birth and what day of the week it is to check your Khodam!</h2>
   
-        <!-- Dropdown for Day -->
-        <div class="column is-one-third">
-            <select id="day-select" class="select" onchange="checkSelection()">
-                <option value="">Select Day</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-                <!-- More days -->
-            </select>
-        </div>
+    <!-- 3-column layout on desktop, stacked on mobile -->
+    <div class="columns is-vcentered is-multiline is-variable is-4 px-4">
   
-        <!-- Image Area -->
-        <div class="column is-one-third">
-            <figure>
-                <img id="reine-image" src="{% static 'home/img/reineboard.png' %}" alt="Pavolia Reine Holding a Whiteboard">
-            </figure>
-        </div>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-narrow">  <!-- is-narrow keeps the column width to the content (button) -->
-          <button class="button" id="confirm-selection" onclick="updateResult()">Confirm Selection</button>
-          <select id="language-select" class="select">
-            <option value="English">English</option>
-            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+      <!-- Month Select -->
+      <div class="column is-full-mobile is-one-third-tablet">
+        <div class="select is-fullwidth">
+          <select id="month-select" onchange="checkSelection()" style="width: 100%;">
+            <option value="">Select Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
           </select>
-          <button class="button" onclick="downloadImage()">
-            <span>Download Image</span>
-            <span class="icon">
-              <i class="fas fa-download"></i>
-            </span>
-          </button>
-          <!-- <button class="button is-link" onclick="shareOnTwitter()">
-            <span>Share your Khodam!</span>
-            <span class="icon">
-              <i class="fab fa-twitter" id="tweet-share"></i>
-            </span>
-          </button> -->
+        </div>
       </div>
+  
+      <!-- Day Select -->
+      <div class="column is-full-mobile is-one-third-tablet">
+        <div class="select is-fullwidth">
+          <select id="day-select" onchange="checkSelection()" style="width: 100%;">
+            <option value="">Select Day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+          </select>
+        </div>
+      </div>
+  
+      <!-- Image Area -->
+      <div class="column is-full-mobile is-one-third-tablet">
+        <figure class="image is-flex is-justify-content-center">
+          <img id="reine-image" src="{% static 'home/img/reineboard.png' %}" alt="Reine" style="max-width: 250px; width: 100%; height: auto;">
+        </figure>
+      </div>
+    </div>
+  
+    <!-- Buttons Section -->
+    <div class="columns is-centered px-4">
+      <div class="column is-narrow">
+        <div
+          class="is-flex is-flex-direction-column-mobile is-flex-direction-row-tablet is-align-items-center is-justify-content-center"
+          style="gap: 0.75rem; flex-wrap: wrap;"
+        >
+          <!-- Confirm Button -->
+          <button class="button is-info" id="confirm-selection" onclick="updateResult()">
+            Confirm Selection
+          </button>
+
+          <!-- Language Dropdown -->
+          <div class="select is-normal" style="height: 2.5em; display: flex; align-items: center;">
+            <select id="language-select" style="height: 100%;">
+              <option value="English">English</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+            </select>
+          </div>
+
+          <!-- Download Button -->
+          <button class="button is-primary" onclick="downloadImage()">
+            <span>Download Image</span>
+            <span class="icon"><i class="fas fa-download"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   
 </div>

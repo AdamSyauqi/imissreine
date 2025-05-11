@@ -1,5 +1,5 @@
 html {
-    background-color: lightblue;
+    background-color: rgba(15,84,161,255);
 }
 
 html, body { height: 100vh; }
@@ -12,8 +12,8 @@ h1, h2 {
     display: inline-block; /* Ensures background color only covers the text area *//
 }
 
-._df_thumb{
-    width:210px;
+._df_thumb {
+    width: 210px;
     height: 300px;
 }
 
@@ -30,10 +30,16 @@ h1, h2 {
     margin-top: 20px;
 }
 
-#twitter-info {
+._df_book-tag {
+    font-size: larger;
+}
+
+#home_button {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    z-index: 10;
     display: flex;
-    justify-content: center; /* Centers the content horizontally */
-    margin: 0 auto; /* Centers the box itself */
-    max-width: 80vw; /* Max width of the box */
-    padding: 1rem; /* Adds padding for better spacing */
+    align-items: center;
+    justify-content: center;
 }
