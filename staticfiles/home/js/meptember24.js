@@ -135,8 +135,8 @@ function findBirthdayData(submitterName, birthdayMessages) {
         submitterName = submitterName.split("_")[1]
     }
 
-    if(submitterName.startsWith("Artblocks")) {
-        submitterName = "Artblock's"
+    if(submitterName.startsWith("Artblock's")) {
+        submitterName = "Artblocks"
     }
 
     if(submitterName.startsWith("Kaiカイ")) {
