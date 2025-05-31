@@ -11,6 +11,9 @@ from django.urls import reverse
 from django.conf import settings
 # Create your views here.
 
+def tailwind_test(request):
+    return render(request, 'home/home_tailwind.html')
+
 def reineistriauki(request):
     return redirect('home:meptember24')
 

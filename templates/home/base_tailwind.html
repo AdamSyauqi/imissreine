@@ -1,0 +1,37 @@
+{% load django_browser_reload %}
+<!DOCTYPE html>
+{% load static %}
+{% load humanize %}
+{% load parse_iso %}
+{% load parse_iso_youtube %}
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}"> <!-- Output of Tailwind -->
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>imissreine.com</title>
+  <meta content="imissreine" property="og:title" />
+  <meta content="A website for you who misses Pavolia Reine" property="og:description" />
+  <meta content="http://www.imissreine.com/" property="og:url" />
+  <meta content="http://www.imissreine.com/static/home/img/reineuuu.webp" property="og:image" />
+  <meta content="imissreine" property="site_name">
+
+  <meta content="http://www.imissreine.com/static/home/img/reineuuu.webp" name="twitter:image:src" id="twitter-image">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="imissreine" id="twitter-title"/>
+  <meta name="twitter:description" content="A website for you who misses Pavolia Reine" id="twitter-desc"/>
+
+  <link rel="shortcut icon" href="{% static 'home/img/reineuuu.webp' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'home/css/home_tailwind.css' %}">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+  <script src="{% static 'home/js/home.js' %}" defer></script>
+</head>
+<body>
+  <div class="bg-sky-100 min-h-screen">
+  {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
+{% django_browser_reload_script %}

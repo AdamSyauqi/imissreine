@@ -1,0 +1,77 @@
+{% extends "home/base_tailwind.html" %}
+{% load static %}
+{% block content %}
+<!-- Transparent Navbar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-white/70 to-transparent">
+  <div class="container mx-auto px-4 py-3 flex items-center space-x-4">
+    <!-- Logo hard-left -->
+    <a href="/" class="shrink-0">
+      <img src="{% static 'home/img/Pavolia-Reine-logo.png' %}" alt="imissreine Logo" class="h-auto" style="max-height: 80px;">
+    </a>
+
+    <!-- Nav links -->
+    <nav class="flex space-x-4 font-semibold text-gray-800">
+      <a href="#live" class="hover:underline">Live</a>
+      <a href="#upcoming" class="hover:underline">Upcoming</a>
+      <a href="#videos" class="hover:underline">Past Streams</a>
+      <a href="#khodam" class="hover:underline">Khodam</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Page Content -->
+<main class="pt-24 px-4 max-w-5xl mx-auto">
+    <section id="live" class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-6">Current Livestream</h2>
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <a href="https://www.youtube.com/watch?v=LIVE123" target="_blank" rel="noopener noreferrer">
+        <div class="flex flex-col md:flex-row">
+          <img src="https://img.youtube.com/vi/LIVE123/hqdefault.jpg" alt="Live Thumbnail" class="w-full md:w-64 object-cover">
+          <div class="p-4">
+            <h3 class="text-xl font-semibold">Reine's Room Cleaning Stream</h3>
+            <p class="text-gray-600">Started: May 31, 2025</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="upcoming" class="mb-16">
+    <h2 class="text-3xl font-bold text-center mb-6">Upcoming Streams</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      {% for i in "1234" %} <!-- Dummy loop for 2 items -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <a href="https://www.youtube.com/watch?v=UPCOMING{{ i }}" target="_blank" rel="noopener noreferrer">
+          <div class="flex">
+            <img src="https://img.youtube.com/vi/UPCOMING{{ i }}/hqdefault.jpg" alt="Upcoming Thumbnail" class="w-40 object-cover">
+            <div class="p-4">
+              <h4 class="text-lg font-bold">Upcoming Stream {{ i }}</h4>
+              <p class="text-sm text-gray-500">Scheduled: June 1{{ i }}, 2025</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="videos">
+    <h2 class="text-3xl font-bold text-center mb-6">Recent Livestreams</h2>
+    <div class="space-y-6">
+      {% for i in "ABCDE" %} <!-- Dummy loop for 5 items -->
+      <div class="bg-white shadow rounded-lg overflow-hidden">
+        <a href="https://www.youtube.com/watch?v=PAST{{ i }}" target="_blank" rel="noopener noreferrer">
+          <div class="flex">
+            <img src="https://img.youtube.com/vi/PAST{{ i }}/hqdefault.jpg" alt="Past Thumbnail" class="w-40 object-cover">
+            <div class="p-4">
+              <h4 class="text-lg font-bold">Past Livestream {{ i }}</h4>
+              <p class="text-sm text-gray-500">Streamed on May {{ forloop.counter }}, 2025</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+{% endblock %}
